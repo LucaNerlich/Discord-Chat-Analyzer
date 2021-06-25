@@ -19,8 +19,8 @@ public class AuthorData {
     private transient LocalDate earliestLocalDate;
     private String firstMessageSent;
     private long messagesSent = 0;
-    private long amountEmojisRecieved = 0;
-    private Map<Emoji, Integer> emojisRecieved = new TreeMap<>(new Emoji.EmojiComparator());
+    private long sumEmojisReceived = 0;
+    private Map<Emoji, Integer> emojisReceived = new TreeMap<>(new Emoji.EmojiComparator());
     
     public void incrementMessages() {
         messagesSent++;
