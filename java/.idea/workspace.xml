@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/EmojiCounter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Statistic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Statistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/Statistic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -99,7 +105,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1624629460576</updated>
-      <workItem from="1624629462417" duration="4706000" />
+      <workItem from="1624629462417" duration="5802000" />
     </task>
     <servers />
   </component>
@@ -122,7 +128,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/analyzer/Main.java</url>
-          <line>28</line>
+          <line>30</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

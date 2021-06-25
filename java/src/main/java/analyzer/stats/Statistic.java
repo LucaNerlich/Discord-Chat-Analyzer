@@ -1,12 +1,12 @@
-package analyzer.models;
+package analyzer.stats;
 
+import analyzer.models.Author;
 import analyzer.models.message.reaction.Emoji;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Holds the analyzed data.
