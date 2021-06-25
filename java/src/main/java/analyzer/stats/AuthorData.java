@@ -60,13 +60,17 @@ public class AuthorData {
         return author.getNickname();
     }
     
-    private void setFirstMessageSent() {
-        firstMessageSent = new StringBuilder()
-                .append(earliestLocalDate.getDayOfMonth())
+    public String getLocalDateAsString(LocalDate localDate) {
+        return new StringBuilder()
+                .append(localDate.getDayOfMonth())
                 .append(".")
-                .append(earliestLocalDate.getMonthValue())
+                .append(localDate.getMonthValue())
                 .append(".")
-                .append(earliestLocalDate.getYear())
+                .append(localDate.getYear())
                 .toString();
+    }
+    
+    private void setFirstMessageSent() {
+        firstMessageSent = getLocalDateAsString(earliestLocalDate);
     }
 }

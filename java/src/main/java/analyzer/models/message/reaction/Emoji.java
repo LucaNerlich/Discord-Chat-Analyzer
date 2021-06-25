@@ -14,6 +14,15 @@ public class Emoji {
     private String name;
     private boolean isAnimated;
     private String imageUrl;
+    private transient Integer count;
+    
+    
+    public static class EmojiCountComparator implements Comparator<Emoji> {
+        @Override
+        public int compare(Emoji o1, Emoji o2) {
+            return o2.count.compareTo(o1.count);
+        }
+    }
     
     @Override
     public boolean equals(Object o) {
