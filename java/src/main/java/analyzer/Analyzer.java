@@ -5,55 +5,62 @@ import analyzer.models.channel.Channel;
 import analyzer.models.message.Message;
 import analyzer.models.message.reaction.Emoji;
 import analyzer.models.message.reaction.Reaction;
-import analyzer.stats.EmojiCounter;
-import analyzer.stats.Statistic;
+import analyzer.stats.AuthorData;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.TreeMap;
 
 @Getter
 public class Analyzer {
     
-    private final Channel channel;
-    private Statistic statistic;
-    private List<EmojiCounter> emojiCounters;
+    private final Map<Author, AuthorData> authorDataMap;
     
-    public Analyzer(final Channel channel) {
-        this.channel = channel;
-        if (channel != null) {
-            this.statistic = analyze(channel);
-        }
-        emojiCounters = createEmojiCounter(statistic);
-    }
-    
-    public List<EmojiCounter> createEmojiCounter(Statistic statistic) {
-        final List<EmojiCounter> result = new ArrayList<>();
+    public Analyzer(final List<Channel> channels) {
+        this.authorDataMap = new TreeMap<>(new Author.AuthorComparator());
         
-        if (statistic != null) {
-            final Map<Author, Map<Emoji, Integer>> authorEmojiMap = statistic.getAuthorEmojiMap();
-            final Set<Map.Entry<Author, Map<Emoji, Integer>>> entries = authorEmojiMap.entrySet();
-            entries.forEach(authorEmojiMapping -> result.add(new EmojiCounter(authorEmojiMapping.getKey(), authorEmojiMapping.getValue())));
-        }
-        return result;
-    }
-    
-    private Statistic analyze(final Channel channel) {
-        final Statistic result = new Statistic();
-        final Message[] messages = channel.getMessages();
-        
-        for (Message message : messages) {
-            final Author author = message.getAuthor();
-            final Reaction[] reactions = message.getReactions();
-            for (Reaction reaction : reactions) {
-                final Emoji emoji = reaction.getEmoji();
-                final short count = reaction.getCount();
-                result.addEmoji(author, emoji, count);
+        if (channels != null) {
+            for (Channel channel : channels) {
+                analyzeChannel(channel);
             }
         }
-        
-        return result;
+    }
+    
+    private void analyzeChannel(final Channel channel) {
+        for (Message message : channel.getMessages()) {
+            final Author author = message.getAuthor();
+            
+            if (!authorDataMap.containsKey(author)) {
+                final AuthorData authorData = new AuthorData();
+                populateAuthorDataMap(authorData, message);
+            } else {
+                populateAuthorDataMap(authorDataMap.get(author), message);
+            }
+        }
+    }
+    
+    private void populateAuthorDataMap(AuthorData authorData, Message message) {
+        analyzeMessage(authorData, message);
+        authorDataMap.put(message.getAuthor(), authorData);
+    }
+    
+    private void analyzeMessage(AuthorData authorData, Message message) {
+        authorData.incrementMessages();
+        analyzeReactions(authorData, message.getReactions());
+    }
+    
+    private void analyzeReactions(AuthorData authorData, Reaction[] reactions) {
+        for (Reaction reaction : reactions) {
+            final Emoji emoji = reaction.getEmoji();
+            final int count = reaction.getCount();
+            
+            final Map<Emoji, Integer> emojisRecieved = authorData.getEmojisRecieved();
+            if (emojisRecieved.containsKey(emoji)) {
+                emojisRecieved.put(emoji, emojisRecieved.get(emoji) + count);
+            } else {
+                emojisRecieved.put(emoji, count);
+            }
+        }
     }
 }

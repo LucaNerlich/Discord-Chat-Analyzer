@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/EmojiCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/EmojiCounter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/EmojiCounter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/Statistic.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +57,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/output.json" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -59,6 +68,9 @@
       <recent name="analyzer.models.message" />
       <recent name="analyzer.models" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="analyzer" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -66,7 +78,7 @@
       <module name="discordchatanalyzer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="analyzer.*" />
+          <option name="PATTERN" value="analyzer.models.message.reaction.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -74,13 +86,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -99,7 +113,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1624629460576</updated>
-      <workItem from="1624629462417" duration="6079000" />
+      <workItem from="1624629462417" duration="6938000" />
+      <workItem from="1624637279486" duration="4823000" />
     </task>
     <servers />
   </component>
@@ -116,15 +131,20 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/analyzer/Main.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="3" />
+          <line>53</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="10" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

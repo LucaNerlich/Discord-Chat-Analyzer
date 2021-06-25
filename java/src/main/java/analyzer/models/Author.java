@@ -2,7 +2,9 @@ package analyzer.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.StringUtils;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 @Getter
@@ -38,10 +40,19 @@ public class Author {
     
     @Override
     public String toString() {
-        return "Author{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", nickname='" + nickname + '\'' +
-                '}';
+        return nickname;
+    }
+    
+    public static class AuthorComparator implements Comparator<Author> {
+        @Override
+        public int compare(Author o1, Author o2) {
+            int result = 0;
+            
+            if (StringUtils.hasText(o1.getName()) && StringUtils.hasText(o2.getName())) {
+                result = o1.getName().compareToIgnoreCase(o2.getName());
+            }
+            
+            return result;
+        }
     }
 }
