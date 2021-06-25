@@ -14,4 +14,6 @@ public class Author {
     private String color;
     private boolean isBot;
     private String avatarUrl;
+    private String url;
+    private String iconUrl;
 }

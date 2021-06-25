@@ -5,28 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/DateRange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Guild.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/channel/Channel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/channel/ChannelInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Attachment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Embeds.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Mention.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Reaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Reference.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Field.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Thumbnail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Embed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Footer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Image.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Attachment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Attachment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Embeds.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Reaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Reaction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +67,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="analyzer.models.message.embed" />
+      <recent name="analyzer.models.message.reaction" />
       <recent name="analyzer.models.message" />
       <recent name="analyzer.models" />
     </key>
@@ -117,7 +112,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1624629460576</updated>
-      <workItem from="1624629462417" duration="1054000" />
+      <workItem from="1624629462417" duration="2195000" />
     </task>
     <servers />
   </component>
@@ -134,5 +129,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/analyzer/Main.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
