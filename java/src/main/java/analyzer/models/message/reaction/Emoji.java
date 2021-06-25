@@ -33,7 +33,11 @@ public class Emoji {
             return false;
         }
         Emoji emoji = (Emoji) o;
-        return isAnimated == emoji.isAnimated && Objects.equals(id, emoji.id) && Objects.equals(name, emoji.name) && Objects.equals(imageUrl, emoji.imageUrl);
+        if (StringUtils.hasText(emoji.name) && StringUtils.hasText(name)) {
+            return name.equals(emoji.name);
+        } else {
+            return Objects.equals(id, emoji.id);
+        }
     }
     
     @Override
@@ -48,6 +52,7 @@ public class Emoji {
     
     public static class EmojiComparator implements Comparator<Emoji> {
         
+        // compare by name
         @Override
         public int compare(Emoji o1, Emoji o2) {
             int result = 0;
