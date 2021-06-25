@@ -23,8 +23,16 @@ public class Analyzer {
         if (channels != null) {
             for (Channel channel : channels) {
                 analyzeChannel(channel);
+                analyzeAuthor(authorDataMap);
             }
         }
+    }
+    
+    private void analyzeAuthor(Map<Author, AuthorData> authorDataMap) {
+        authorDataMap.entrySet().parallelStream().forEach(entry -> {
+            final Author key = entry.getKey();
+            final AuthorData value = entry.getValue();
+        });
     }
     
     private void analyzeChannel(final Channel channel) {
@@ -42,6 +50,8 @@ public class Analyzer {
     
     private void populateAuthorDataMap(AuthorData authorData, Message message) {
         analyzeMessage(authorData, message);
+        authorData.setAuthorId(message.getAuthor().getId());
+        authorData.setEarliestLocalDate(message.getTimestamp());
         authorDataMap.put(message.getAuthor(), authorData);
     }
     

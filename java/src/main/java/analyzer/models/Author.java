@@ -30,7 +30,7 @@ public class Author {
             return false;
         }
         Author author = (Author) o;
-        return id.equals(author.id) && name.equals(author.name);
+        return id.equals(author.id);
     }
     
     @Override

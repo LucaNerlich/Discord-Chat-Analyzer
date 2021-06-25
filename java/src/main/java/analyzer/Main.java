@@ -2,6 +2,7 @@ package analyzer;
 
 import analyzer.models.channel.Channel;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.util.StopWatch;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +44,26 @@ public class Main {
     }
     
     private static List<Channel> parseJsonToChannels() {
-        final Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
         
         final List<Channel> channels = new ArrayList<>();
         final List<String> logs = readLogs();
         
-        for (String logFilePath : logs) {
+        logs.parallelStream().forEach(logFilePath -> {
             try (Reader reader = Files.newBufferedReader(Paths.get(logFilePath))) {
                 final StopWatch stopWatch = new StopWatch();
                 stopWatch.start();
                 final Channel channel = gson.fromJson(reader, Channel.class);
                 channels.add(channel);
                 stopWatch.stop();
-    
+                
                 DecimalFormat df = new DecimalFormat("###.###");
                 System.out.println("Parsing Json took: " + df.format(stopWatch.getTotalTimeSeconds()) + " seconds. Channel: " + channel.getChannel().getName());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
+        });
+        
         return channels;
     }
     
