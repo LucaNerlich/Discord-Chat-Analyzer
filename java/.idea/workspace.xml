@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Field.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Thumbnail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Embed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Footer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/embed/Image.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Statistic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Attachment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Attachment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Embeds.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/Reaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Reaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +103,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1624629460576</updated>
-      <workItem from="1624629462417" duration="2195000" />
+      <workItem from="1624629462417" duration="4492000" />
     </task>
     <servers />
   </component>
@@ -135,8 +126,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/analyzer/Main.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="2" />
+          <line>28</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
