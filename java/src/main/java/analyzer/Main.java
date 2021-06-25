@@ -1,6 +1,9 @@
 package analyzer;
 
+import analyzer.models.Author;
+import analyzer.models.Ranking;
 import analyzer.models.channel.Channel;
+import analyzer.stats.AuthorData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.util.StopWatch;
@@ -14,13 +17,16 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     private static final String TEST_LOG = "logs/test.json";
-    private static final String OUTPUT_FILE = "logs/output.json";
+    private static final String OUTPUT_FILE_AUTHORS = "logs/output-all.json";
+    private static final String OUTPUT_FILE_RANKING = "logs/output-ranking.json";
     
     
     public static void main(String[] args) {
@@ -32,15 +38,30 @@ public class Main {
         
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        try (Writer writer = Files.newBufferedWriter(Paths.get(OUTPUT_FILE))) {
-            gson.toJson(analyzer.getAuthorDataMap(), writer);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        writeAllAuthorsToFile(gson, analyzer);
+        writeRankingToFile(gson, analyzer);
         stopWatch.stop();
         System.out.println("Creating output Json took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
         
         System.out.println("Ending Discord Chat Analyzer");
+    }
+    
+    private static void writeRankingToFile(Gson gson, Analyzer analyzer) {
+        try (Writer writer = Files.newBufferedWriter(Paths.get(OUTPUT_FILE_RANKING))) {
+            final Map<Author, AuthorData> authorDataMap = analyzer.getAuthorDataMap();
+            final Ranking ranking = new Ranking(new LinkedList<>(authorDataMap.values()));
+            gson.toJson(ranking, writer);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+    
+    private static void writeAllAuthorsToFile(Gson gson, Analyzer analyzer) {
+        try (Writer writer = Files.newBufferedWriter(Paths.get(OUTPUT_FILE_AUTHORS))) {
+            gson.toJson(analyzer.getAuthorDataMap(), writer);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
     
     private static List<Channel> parseJsonToChannels() {

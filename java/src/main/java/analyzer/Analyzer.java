@@ -67,6 +67,7 @@ public class Analyzer {
     private void populateAuthorDataMap(AuthorData authorData, Message message) {
         analyzeMessage(authorData, message);
         authorData.setAuthorId(message.getAuthor().getId());
+        authorData.setAuthor(message.getAuthor());
         authorData.setEarliestLocalDate(message.getTimestamp());
         authorDataMap.put(message.getAuthor(), authorData);
     }
