@@ -11,10 +11,10 @@ import java.util.Map;
 @Setter
 public class EmojiCounter {
     private String author;
-    private Map<Emoji, Integer> emojiCounter;
+    private Map<Emoji, Integer> emojisReceived;
     
     public EmojiCounter(Author author, Map<Emoji, Integer> emojiCounterMap) {
         this.author = author.getNickname();
-        this.emojiCounter = emojiCounterMap;
+        this.emojisReceived = emojiCounterMap;
     }
 }
