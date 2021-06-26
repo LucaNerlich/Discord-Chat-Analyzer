@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/Ranking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/RankingType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/MostCommonReactionRanking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/MostMessagesRanking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Ranking.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -51,6 +63,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/output.json" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="discord-application" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -106,6 +119,9 @@
       <workItem from="1624629462417" duration="6938000" />
       <workItem from="1624637279486" duration="4927000" />
       <workItem from="1624647041661" duration="7585000" />
+      <workItem from="1624713690997" duration="1107000" />
+      <workItem from="1624714820527" duration="30000" />
+      <workItem from="1624714864349" duration="2752000" />
     </task>
     <servers />
   </component>

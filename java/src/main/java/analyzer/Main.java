@@ -1,9 +1,8 @@
 package analyzer;
 
-import analyzer.models.Author;
-import analyzer.models.Ranking;
 import analyzer.models.channel.Channel;
-import analyzer.stats.AuthorData;
+import analyzer.models.ranking.Ranking;
+import analyzer.models.ranking.RankingType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.util.StopWatch;
@@ -17,42 +16,64 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     private static final String TEST_LOG = "logs/test.json";
     private static final String OUTPUT_FILE_AUTHORS = "logs/output-all.json";
-    private static final String OUTPUT_FILE_RANKING = "logs/output-ranking.json";
     
     
     public static void main(String[] args) {
         System.out.println("Starting Discord Chat Analyzer");
         
-        final Gson gson = new Gson();
-        Analyzer analyzer = new Analyzer(parseJsonToChannels());
+        final Analyzer analyzer = new Analyzer(parseJsonToChannels());
         
+        // Write Author Data
+        writeAuthorData(analyzer);
         
-        final StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        writeAllAuthorsToFile(gson, analyzer);
-        writeRankingToFile(gson, analyzer);
-        stopWatch.stop();
-        System.out.println("Creating output Json took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
+        // Write Rankings in parallel
+        writeRankings(analyzer);
         
         System.out.println("Ending Discord Chat Analyzer");
     }
     
-    private static void writeRankingToFile(Gson gson, Analyzer analyzer) {
-        try (Writer writer = Files.newBufferedWriter(Paths.get(OUTPUT_FILE_RANKING))) {
-            final Map<Author, AuthorData> authorDataMap = analyzer.getAuthorDataMap();
-            final Ranking ranking = new Ranking(new LinkedList<>(authorDataMap.values()));
-            gson.toJson(ranking, writer);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+    private static void writeRankings(Analyzer analyzer) {
+        final ExecutorService executorService = Executors.newFixedThreadPool(RankingType.values().length);
+        Arrays.stream(RankingType.values())
+                .forEach(rankingType ->
+                        executorService.execute(() ->
+                                writeRankingToFile(analyzer, rankingType)));
+    }
+    
+    private static void writeAuthorData(Analyzer analyzer) {
+        final Gson gson = new Gson();
+        final StopWatch stopWatch = new StopWatch();
+        
+        stopWatch.start();
+        writeAllAuthorsToFile(gson, analyzer);
+        System.out.println("Writing " + OUTPUT_FILE_AUTHORS + " took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
+        stopWatch.stop();
+    }
+    
+    private static void writeRankingToFile(Analyzer analyzer, RankingType rankingType) {
+        final Gson gson = new Gson();
+        final StopWatch stopWatch = new StopWatch();
+        final Ranking ranking = analyzer.getRanking(rankingType);
+        
+        if (ranking != null) {
+            stopWatch.start();
+            try (Writer writer = Files.newBufferedWriter(Paths.get(ranking.getOutputFilePath()))) {
+                gson.toJson(ranking, writer);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            stopWatch.stop();
+            System.out.println("Writing " + ranking.getOutputFilePath() + " took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
         }
     }
     

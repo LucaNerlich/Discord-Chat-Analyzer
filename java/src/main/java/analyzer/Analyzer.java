@@ -5,9 +5,18 @@ import analyzer.models.channel.Channel;
 import analyzer.models.message.Message;
 import analyzer.models.message.reaction.Emoji;
 import analyzer.models.message.reaction.Reaction;
+import analyzer.models.ranking.Ranking;
+import analyzer.models.ranking.RankingType;
+import analyzer.models.ranking.impl.AccountAgeRanking;
+import analyzer.models.ranking.impl.AvgWordCountRanking;
+import analyzer.models.ranking.impl.MostCommonReactionRanking;
+import analyzer.models.ranking.impl.MostMessagesRanking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,6 +37,28 @@ public class Analyzer {
                 removeAuthors();
             }
         }
+    }
+    
+    @Nullable
+    public Ranking getRanking(RankingType rankingType) {
+        Ranking result = null;
+        
+        switch (rankingType) {
+            case MOST_MESSAGES:
+                result = new MostMessagesRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case ACCOUNT_AGE:
+                result = new AccountAgeRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case MOST_COMMON_REACTION:
+                result = new MostCommonReactionRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case AVG_WORD_COUNT:
+                result = new AvgWordCountRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+        }
+        
+        return result;
     }
     
     private void removeAuthors() {
@@ -74,7 +105,16 @@ public class Analyzer {
     
     private void analyzeMessage(AuthorData authorData, Message message) {
         authorData.incrementMessages();
+        analyzeContent(authorData, message);
         analyzeReactions(authorData, message.getReactions());
+    }
+    
+    private void analyzeContent(AuthorData authorData, Message message) {
+        final String content = message.getContent();
+        if (StringUtils.hasText(content)) {
+            String[] words = content.split("\\s+");
+            authorData.addWordCount(words.length);
+        }
     }
     
     private void analyzeReactions(AuthorData authorData, Reaction[] reactions) {
