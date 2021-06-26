@@ -31,15 +31,18 @@ public class AvgWordCountRanking extends Ranking {
     }
     
     private void calculateAvgWordCount(List<AuthorData> authorDataList) {
-        authorDataList.forEach(authorData -> {
-            final double wordCountSum = authorData.getWordCountSum();
-            final double messagesSent = authorData.getMessagesSent();
-            
-            if (wordCountSum > 0 && messagesSent > 0) {
-                authorData.setAverageWordsPerMessage(wordCountSum / messagesSent);
-                averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
-            }
-        });
+        authorDataList
+                .stream()
+                .filter(authorData -> authorData.getMessagesSent() >= 10)
+                .forEach(authorData -> {
+                    final double wordCountSum = authorData.getWordCountSum();
+                    final double messagesSent = authorData.getMessagesSent();
+                    
+                    if (wordCountSum > 0 && messagesSent > 0) {
+                        authorData.setAverageWordsPerMessage(wordCountSum / messagesSent);
+                        averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
+                    }
+                });
     }
     
     @Override
