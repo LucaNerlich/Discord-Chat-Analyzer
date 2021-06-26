@@ -28,26 +28,27 @@ public class Main {
     private static final String OUTPUT_FILE_AUTHORS = "logs/output-all.json";
     
     
-    public static void main(String[] args) {
-        System.out.println("Starting Discord Chat Analyzer");
-        
+    public static void main(String[] args) throws InterruptedException {
         final Analyzer analyzer = new Analyzer(parseJsonToChannels());
         
         // Write Author Data
         writeAuthorData(analyzer);
         
         // Write Rankings in parallel
-        writeRankings(analyzer);
-        
-        System.out.println("Ending Discord Chat Analyzer");
+        try {
+            writeRankings(analyzer);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     
-    private static void writeRankings(Analyzer analyzer) {
+    private static void writeRankings(Analyzer analyzer) throws InterruptedException {
         final ExecutorService executorService = Executors.newFixedThreadPool(RankingType.values().length);
         Arrays.stream(RankingType.values())
                 .forEach(rankingType ->
                         executorService.execute(() ->
                                 writeRankingToFile(analyzer, rankingType)));
+        executorService.shutdown();
     }
     
     private static void writeAuthorData(Analyzer analyzer) {
@@ -73,7 +74,7 @@ public class Main {
                 ioException.printStackTrace();
             }
             stopWatch.stop();
-            System.out.println("Writing " + ranking.getOutputFilePath() + " took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
+            System.out.println("Writing " + ranking.getOutputFilePath() + " took: " + stopWatch.getTotalTimeMillis() + " milliseconds.");
         }
     }
     
