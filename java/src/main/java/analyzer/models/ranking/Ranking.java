@@ -16,6 +16,8 @@ public abstract class Ranking {
         this.authorDataList = authorDataList;
     }
     
-    public abstract String getOutputFilePath();
+    public String getOutputFilePath() {
+        return "logs/not-implemented.json";
+    }
     
 }

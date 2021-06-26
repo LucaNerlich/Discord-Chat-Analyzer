@@ -3,6 +3,7 @@ package analyzer;
 import analyzer.models.Author;
 import analyzer.models.channel.Channel;
 import analyzer.models.message.Message;
+import analyzer.models.message.embed.Embed;
 import analyzer.models.message.reaction.Emoji;
 import analyzer.models.message.reaction.Reaction;
 import analyzer.models.ranking.Ranking;
@@ -10,6 +11,7 @@ import analyzer.models.ranking.RankingType;
 import analyzer.models.ranking.impl.AccountAgeRanking;
 import analyzer.models.ranking.impl.AvgWordCountRanking;
 import analyzer.models.ranking.impl.MostCommonReactionRanking;
+import analyzer.models.ranking.impl.MostEmbedsRanking;
 import analyzer.models.ranking.impl.MostMessagesRanking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
@@ -55,6 +57,9 @@ public class Analyzer {
                 break;
             case AVG_WORD_COUNT:
                 result = new AvgWordCountRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case MOST_EMBEDS:
+                result = new MostEmbedsRanking(new LinkedList<>(authorDataMap.values()));
                 break;
         }
         
@@ -106,7 +111,15 @@ public class Analyzer {
     private void analyzeMessage(AuthorData authorData, Message message) {
         authorData.incrementMessages();
         analyzeContent(authorData, message);
+        analyzeEmbeds(authorData, message);
         analyzeReactions(authorData, message.getReactions());
+    }
+    
+    private void analyzeEmbeds(AuthorData authorData, Message message) {
+        final Embed[] embeds = message.getEmbeds();
+        if (embeds != null && embeds.length > 0) {
+            authorData.incrementEmbdes();
+        }
     }
     
     private void analyzeContent(AuthorData authorData, Message message) {

@@ -27,6 +27,7 @@ public class AuthorData {
     private String firstMessageSent;
     private double averageWordsPerMessage;
     private long messagesSent = 0;
+    private long embedsSent = 0;
     private long sumEmojisReceived = 0;
     private Map<Emoji, Integer> emojisReceived = new TreeMap<>(new Emoji.EmojiComparator());
     
@@ -40,6 +41,10 @@ public class AuthorData {
     
     public void incrementMessages() {
         messagesSent++;
+    }
+    
+    public void incrementEmbdes() {
+        embedsSent++;
     }
     
     public void setEarliestLocalDate(String timestamp) {
@@ -58,6 +63,15 @@ public class AuthorData {
             final Long messagesSent1 = o1.getMessagesSent();
             final Long messagesSent2 = o2.getMessagesSent();
             return messagesSent2.compareTo(messagesSent1);
+        }
+    }
+    
+    public static class AuthorDataEmbedsCountComparator implements Comparator<AuthorData> {
+        @Override
+        public int compare(AuthorData o1, AuthorData o2) {
+            final Long embedsSent1 = o1.getEmbedsSent();
+            final Long embedsSent2 = o2.getEmbedsSent();
+            return embedsSent2.compareTo(embedsSent1);
         }
     }
     

@@ -57,7 +57,7 @@ public class Main {
         
         stopWatch.start();
         writeAllAuthorsToFile(gson, analyzer);
-        System.out.println("Writing " + OUTPUT_FILE_AUTHORS + " took: " + stopWatch.getTotalTimeSeconds() + " seconds.");
+        System.out.println("Writing " + OUTPUT_FILE_AUTHORS + " took: " + stopWatch.getTotalTimeMillis() + " milliseconds.");
         stopWatch.stop();
     }
     
@@ -116,8 +116,11 @@ public class Main {
         final List<String> folderPaths = List.of(
                 "logs/enklave",
                 "logs/thepod",
-                "logs/okcool"
+                "logs/okcool",
+                "logs/stayforever"
 //                "logs/hooked"
+//                "logs/nextjs"
+//                "logs/computerbase"
         );
         for (String folder : folderPaths) {
             try (Stream<Path> walk = Files.walk(Paths.get(folder))) {

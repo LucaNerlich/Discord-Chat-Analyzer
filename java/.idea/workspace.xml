@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/MostEmbedsRanking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Analyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/Ranking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/Ranking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/RankingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/RankingType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +117,7 @@
       <workItem from="1624647041661" duration="7585000" />
       <workItem from="1624713690997" duration="1107000" />
       <workItem from="1624714820527" duration="30000" />
-      <workItem from="1624714864349" duration="5485000" />
+      <workItem from="1624714864349" duration="8730000" />
     </task>
     <servers />
   </component>
