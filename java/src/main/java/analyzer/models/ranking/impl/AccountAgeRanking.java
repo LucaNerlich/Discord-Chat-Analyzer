@@ -21,7 +21,9 @@ public class AccountAgeRanking extends Ranking {
     
     private void calculateAccountAgeRanking(List<AuthorData> authorDataList) {
         oldestAccount = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
-        authorDataList.forEach(authorData -> oldestAccount.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
+        authorDataList.stream()
+                .filter(authorData -> authorData.getMessagesSent() >= 10)
+                .forEach(authorData -> oldestAccount.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
     }
     
     @Override

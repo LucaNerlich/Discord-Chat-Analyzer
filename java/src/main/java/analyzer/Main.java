@@ -115,7 +115,9 @@ public class Main {
         
         final List<String> folderPaths = List.of(
                 "logs/enklave",
-                "logs/thepod"
+                "logs/thepod",
+                "logs/okcool"
+//                "logs/hooked"
         );
         for (String folder : folderPaths) {
             try (Stream<Path> walk = Files.walk(Paths.get(folder))) {
