@@ -2,6 +2,7 @@ package analyzer;
 
 import analyzer.models.Author;
 import analyzer.models.channel.Channel;
+import analyzer.models.message.Attachment;
 import analyzer.models.message.Message;
 import analyzer.models.message.embed.Embed;
 import analyzer.models.message.reaction.Emoji;
@@ -10,6 +11,7 @@ import analyzer.models.ranking.Ranking;
 import analyzer.models.ranking.RankingType;
 import analyzer.models.ranking.impl.AccountAgeRanking;
 import analyzer.models.ranking.impl.AvgWordCountRanking;
+import analyzer.models.ranking.impl.MostAttachmentsRanking;
 import analyzer.models.ranking.impl.MostCommonReactionRanking;
 import analyzer.models.ranking.impl.MostEmbedsRanking;
 import analyzer.models.ranking.impl.MostMessagesRanking;
@@ -60,6 +62,9 @@ public class Analyzer {
                 break;
             case MOST_EMBEDS:
                 result = new MostEmbedsRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case MOST_ATTACHMENTS:
+                result = new MostAttachmentsRanking(new LinkedList<>(authorDataMap.values()));
                 break;
         }
         
@@ -112,7 +117,15 @@ public class Analyzer {
         authorData.incrementMessages();
         analyzeContent(authorData, message);
         analyzeEmbeds(authorData, message);
+        analyzeAttachments(authorData, message);
         analyzeReactions(authorData, message.getReactions());
+    }
+    
+    private void analyzeAttachments(AuthorData authorData, Message message) {
+        final Attachment[] attachments = message.getAttachments();
+        if (attachments != null && attachments.length > 0) {
+            authorData.incrementAttachments();
+        }
     }
     
     private void analyzeEmbeds(AuthorData authorData, Message message) {

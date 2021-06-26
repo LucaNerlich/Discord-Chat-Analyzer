@@ -28,6 +28,7 @@ public class AuthorData {
     private double averageWordsPerMessage;
     private long messagesSent = 0;
     private long embedsSent = 0;
+    private long attachmentsSent = 0;
     private long sumEmojisReceived = 0;
     private Map<Emoji, Integer> emojisReceived = new TreeMap<>(new Emoji.EmojiComparator());
     
@@ -41,6 +42,10 @@ public class AuthorData {
     
     public void incrementMessages() {
         messagesSent++;
+    }
+    
+    public void incrementAttachments() {
+        attachmentsSent++;
     }
     
     public void incrementEmbdes() {
@@ -72,6 +77,15 @@ public class AuthorData {
             final Long embedsSent1 = o1.getEmbedsSent();
             final Long embedsSent2 = o2.getEmbedsSent();
             return embedsSent2.compareTo(embedsSent1);
+        }
+    }
+    
+    public static class AuthorDataAttachmentsCountComparator implements Comparator<AuthorData> {
+        @Override
+        public int compare(AuthorData o1, AuthorData o2) {
+            final Long attachmentsSent1 = o1.getAttachmentsSent();
+            final Long attachmentsSent2 = o2.getAttachmentsSent();
+            return attachmentsSent2.compareTo(attachmentsSent1);
         }
     }
     
