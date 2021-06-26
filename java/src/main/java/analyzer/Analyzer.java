@@ -3,6 +3,7 @@ package analyzer;
 import analyzer.models.Author;
 import analyzer.models.channel.Channel;
 import analyzer.models.message.Attachment;
+import analyzer.models.message.Mention;
 import analyzer.models.message.Message;
 import analyzer.models.message.embed.Embed;
 import analyzer.models.message.reaction.Emoji;
@@ -15,6 +16,7 @@ import analyzer.models.ranking.impl.MostAttachmentsRanking;
 import analyzer.models.ranking.impl.MostCommonReactionRanking;
 import analyzer.models.ranking.impl.MostEmbedsRanking;
 import analyzer.models.ranking.impl.MostMessagesRanking;
+import analyzer.models.ranking.impl.TimesMentionedRanking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
 import org.springframework.lang.Nullable;
@@ -65,6 +67,9 @@ public class Analyzer {
                 break;
             case MOST_ATTACHMENTS:
                 result = new MostAttachmentsRanking(new LinkedList<>(authorDataMap.values()));
+                break;
+            case TIMES_MENTIONED:
+                result = new TimesMentionedRanking(new LinkedList<>(authorDataMap.values()));
                 break;
         }
         
@@ -118,7 +123,15 @@ public class Analyzer {
         analyzeContent(authorData, message);
         analyzeEmbeds(authorData, message);
         analyzeAttachments(authorData, message);
+        analyzeMentions(authorData, message);
         analyzeReactions(authorData, message.getReactions());
+    }
+    
+    private void analyzeMentions(AuthorData authorData, Message message) {
+        final Mention[] mentions = message.getMentions();
+        if (mentions != null && mentions.length > 0) {
+            authorData.incrementTimesMentioned();
+        }
     }
     
     private void analyzeAttachments(AuthorData authorData, Message message) {

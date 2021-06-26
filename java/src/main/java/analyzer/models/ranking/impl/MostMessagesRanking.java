@@ -13,14 +13,14 @@ public class MostMessagesRanking extends Ranking {
     private static final transient String OUTPUT_FILE_NAME = "logs/ranking-most-messages.json";
     
     @Getter
-    private long allMessages;
+    private long messagesSent;
     @Getter
     private TreeMap<AuthorData, Long> mostMessages;
     
     public MostMessagesRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
-        countMessages(authorDataList);
         calculateMessageRanking(authorDataList);
+        countMessages(authorDataList);
     }
     
     private void calculateMessageRanking(List<AuthorData> authorDataList) {
@@ -30,7 +30,7 @@ public class MostMessagesRanking extends Ranking {
     
     private void countMessages(List<AuthorData> authorDataList) {
         for (AuthorData authorData : authorDataList) {
-            allMessages = allMessages + authorData.getMessagesSent();
+            messagesSent = messagesSent + authorData.getMessagesSent();
         }
     }
     

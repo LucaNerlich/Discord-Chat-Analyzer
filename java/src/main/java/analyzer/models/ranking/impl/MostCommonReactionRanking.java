@@ -16,12 +16,21 @@ public class MostCommonReactionRanking extends Ranking {
     private static final transient String OUTPUT_FILE_NAME = "logs/ranking-most-common-reaction.json";
     
     @Getter
+    private long reactionsGiven;
+    @Getter
     @Setter
     private TreeMap<Emoji, Integer> mostCommonReaction = new TreeMap<>(new Emoji.EmojiCountComparator());
     
     public MostCommonReactionRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
         calculateMostCommonReaction(authorDataList);
+        countReactions(authorDataList);
+    }
+    
+    private void countReactions(List<AuthorData> authorDataList) {
+        mostCommonReaction.entrySet().forEach(emojiIntegerEntry -> {
+            reactionsGiven = reactionsGiven + emojiIntegerEntry.getValue();
+        });
     }
     
     private void calculateMostCommonReaction(List<AuthorData> authorDataList) {
