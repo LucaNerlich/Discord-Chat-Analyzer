@@ -12,7 +12,7 @@ public class AccountAgeRanking extends Ranking {
     private static final transient String OUTPUT_FILE_NAME = "logs/ranking-account-age.json";
     
     @Getter
-    private TreeMap<AuthorData, String> oldestAccount;
+    private TreeMap<AuthorData, String> joinedServer;
     
     public AccountAgeRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
@@ -20,10 +20,10 @@ public class AccountAgeRanking extends Ranking {
     }
     
     private void calculateAccountAgeRanking(List<AuthorData> authorDataList) {
-        oldestAccount = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
+        joinedServer = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
         authorDataList.stream()
                 .filter(authorData -> authorData.getMessagesSent() >= 10)
-                .forEach(authorData -> oldestAccount.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
+                .forEach(authorData -> joinedServer.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
     }
     
     @Override

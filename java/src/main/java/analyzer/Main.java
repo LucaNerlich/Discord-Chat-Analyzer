@@ -114,13 +114,13 @@ public class Main {
         List<String> logPaths = new ArrayList<>();
         
         final List<String> folderPaths = List.of(
-                "logs/enklave",
-                "logs/thepod",
-                "logs/okcool",
-                "logs/stayforever"
+//                "logs/enklave",
+//                "logs/thepod",
+//                "logs/okcool",
+//                "logs/stayforever"
 //                "logs/hooked"
 //                "logs/nextjs"
-//                "logs/computerbase"
+                "logs/computerbase"
         );
         for (String folder : folderPaths) {
             try (Stream<Path> walk = Files.walk(Paths.get(folder))) {
