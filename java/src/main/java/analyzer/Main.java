@@ -120,7 +120,8 @@ public class Main {
 //                "logs/stayforever"
 //                "logs/hooked"
 //                "logs/nextjs"
-                "logs/computerbase"
+//                "logs/computerbase"
+                "logs/insertmoin"
         );
         for (String folder : folderPaths) {
             try (Stream<Path> walk = Files.walk(Paths.get(folder))) {

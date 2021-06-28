@@ -7,6 +7,9 @@
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/output.json" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/output.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/ranking-account-age.json" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="settings.editor.selected.configurable" value="discord-application" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -82,17 +85,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -113,6 +105,9 @@
       <workItem from="1624713690997" duration="1107000" />
       <workItem from="1624714820527" duration="30000" />
       <workItem from="1624714864349" duration="11525000" />
+      <workItem from="1624866264355" duration="771000" />
+      <workItem from="1624870637810" duration="11000" />
+      <workItem from="1624873263347" duration="2268000" />
     </task>
     <servers />
   </component>
@@ -138,6 +133,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="10" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

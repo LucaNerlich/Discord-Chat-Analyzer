@@ -19,6 +19,7 @@ public class AccountAgeRanking extends Ranking {
         calculateAccountAgeRanking(authorDataList);
     }
     
+    // todo bug, somehow does not add a lot of accounts
     private void calculateAccountAgeRanking(List<AuthorData> authorDataList) {
         joinedServer = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
         authorDataList.stream()

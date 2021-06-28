@@ -39,10 +39,16 @@ public class AvgWordCountRanking extends Ranking {
                     final double messagesSent = authorData.getMessagesSent();
                     
                     if (wordCountSum > 0 && messagesSent > 0) {
-                        authorData.setAverageWordsPerMessage(wordCountSum / messagesSent);
+                        authorData.setAverageWordsPerMessage(round(wordCountSum / messagesSent));
                         averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
                     }
                 });
+    }
+    
+    // round to 2 precision points
+    private static double round(double value) {
+        double scale = Math.pow(10, 2);
+        return Math.round(value * scale) / scale;
     }
     
     @Override

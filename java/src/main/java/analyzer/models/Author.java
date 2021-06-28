@@ -55,4 +55,18 @@ public class Author {
             return result;
         }
     }
+    
+    public void setNickname(String nickname) {
+        if (nickname.contains("\\")) {
+            this.nickname = nickname.replace("\\", "\\\\");
+        }
+        this.nickname = nickname;
+    }
+    
+    public String getNickname() {
+        if (nickname.contains("\\")) {
+            return nickname.replace("\\", "\\\\");
+        }
+        return nickname;
+    }
 }
