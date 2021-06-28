@@ -20,7 +20,13 @@ public class Emoji {
     public static class EmojiCountComparator implements Comparator<Emoji> {
         @Override
         public int compare(Emoji o1, Emoji o2) {
-            return o2.count.compareTo(o1.count);
+            final int compare = o2.count.compareTo(o1.count);
+            
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
@@ -58,7 +64,13 @@ public class Emoji {
             int result = 0;
             
             if (StringUtils.hasText(o1.getName()) && StringUtils.hasText(o2.getName())) {
-                result = o1.getName().compareToIgnoreCase(o2.getName());
+                final int compare = o1.getName().compareToIgnoreCase(o2.getName());
+                
+                if (compare == 0) {
+                    return 1;
+                } else {
+                    return compare;
+                }
             }
             
             return result;

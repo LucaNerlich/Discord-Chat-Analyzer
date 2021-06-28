@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/message/reaction/Emoji.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AvgWordCountRanking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/stats/AuthorData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +106,7 @@
       <workItem from="1624714864349" duration="11525000" />
       <workItem from="1624866264355" duration="771000" />
       <workItem from="1624870637810" duration="11000" />
-      <workItem from="1624873263347" duration="3591000" />
+      <workItem from="1624873263347" duration="3894000" />
     </task>
     <servers />
   </component>
@@ -130,6 +132,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="10" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

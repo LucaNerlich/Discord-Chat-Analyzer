@@ -26,7 +26,13 @@ public class AvgWordCountRanking extends Ranking {
     public static class AvgWordCountComparator implements Comparator<Double> {
         @Override
         public int compare(Double o1, Double o2) {
-            return o2.compareTo(o1);
+            final int compare = o2.compareTo(o1);
+            
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     

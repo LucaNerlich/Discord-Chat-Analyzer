@@ -72,7 +72,13 @@ public class AuthorData {
         public int compare(AuthorData o1, AuthorData o2) {
             final Long messagesSent1 = o1.getMessagesSent();
             final Long messagesSent2 = o2.getMessagesSent();
-            return messagesSent2.compareTo(messagesSent1);
+            final int compare = messagesSent2.compareTo(messagesSent1);
+            
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
@@ -81,7 +87,13 @@ public class AuthorData {
         public int compare(AuthorData o1, AuthorData o2) {
             final Long timesMentioned1 = o1.getTimesMentioned();
             final Long timesMentioned2 = o2.getTimesMentioned();
-            return timesMentioned2.compareTo(timesMentioned1);
+            final int compare = timesMentioned2.compareTo(timesMentioned1);
+    
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
@@ -90,7 +102,13 @@ public class AuthorData {
         public int compare(AuthorData o1, AuthorData o2) {
             final Long embedsSent1 = o1.getEmbedsSent();
             final Long embedsSent2 = o2.getEmbedsSent();
-            return embedsSent2.compareTo(embedsSent1);
+            final int compare = embedsSent2.compareTo(embedsSent1);
+    
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
@@ -99,7 +117,13 @@ public class AuthorData {
         public int compare(AuthorData o1, AuthorData o2) {
             final Long attachmentsSent1 = o1.getAttachmentsSent();
             final Long attachmentsSent2 = o2.getAttachmentsSent();
-            return attachmentsSent2.compareTo(attachmentsSent1);
+            final int compare = attachmentsSent2.compareTo(attachmentsSent1);
+    
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
