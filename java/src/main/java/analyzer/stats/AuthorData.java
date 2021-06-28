@@ -106,7 +106,12 @@ public class AuthorData {
     public static class AuthorDataFirstMessageComparator implements Comparator<AuthorData> {
         @Override
         public int compare(AuthorData o1, AuthorData o2) {
-            return o1.getEarliestLocalDate().compareTo(o2.getEarliestLocalDate());
+            final int compare = o1.getEarliestLocalDate().compareTo(o2.getEarliestLocalDate());
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
         }
     }
     
