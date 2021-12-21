@@ -12,27 +12,25 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MostCommonReactionRanking extends Ranking {
-    
+
     private static final transient String OUTPUT_FILE_NAME = "logs/ranking-most-common-reaction.json";
-    
+
     @Getter
     private long reactionsGiven;
     @Getter
     @Setter
     private TreeMap<Emoji, Integer> mostCommonReaction = new TreeMap<>(new Emoji.EmojiCountComparator());
-    
+
     public MostCommonReactionRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
         calculateMostCommonReaction(authorDataList);
-        countReactions(authorDataList);
+        countReactions();
     }
-    
-    private void countReactions(List<AuthorData> authorDataList) {
-        mostCommonReaction.entrySet().forEach(emojiIntegerEntry -> {
-            reactionsGiven = reactionsGiven + emojiIntegerEntry.getValue();
-        });
+
+    private void countReactions() {
+        mostCommonReaction.forEach((key, value) -> reactionsGiven = reactionsGiven + value);
     }
-    
+
     private void calculateMostCommonReaction(List<AuthorData> authorDataList) {
         Map<Emoji, Integer> emojiCount = new HashMap<>();
         authorDataList.forEach(authorData -> {
@@ -45,12 +43,14 @@ public class MostCommonReactionRanking extends Ranking {
                 }
             });
         });
+
+        // write emoji count
         for (Map.Entry<Emoji, Integer> emoji : emojiCount.entrySet()) {
             emoji.getKey().setCount(emoji.getValue());
         }
         mostCommonReaction.putAll(emojiCount);
     }
-    
+
     @Override
     public String getOutputFilePath() {
         return OUTPUT_FILE_NAME;

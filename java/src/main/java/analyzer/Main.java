@@ -87,7 +87,7 @@ public class Main {
     }
     
     private static List<Channel> parseJsonToChannels() {
-        Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
+        final Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
         
         final List<Channel> channels = new ArrayList<>();
         final List<String> logs = readLogs();

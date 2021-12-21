@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="813435ee-6cae-42bd-9233-06f7a204e41c" name="Default Changelist" comment="add https://github.com/Tyrrrz/DiscordChatExporter to README.md">
+      <change afterPath="$PROJECT_DIR$/:Users:lucanerlich:workspace:luca:discordchatanalyzer:java:src:main:java.uml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uml.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/Ranking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/Ranking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/MostCommonReactionRanking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/MostCommonReactionRanking.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,9 +62,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/logs/test.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/output.json&#10;C:/Users/Luca/IdeaProjects/discordchatanalyzer/java/logs/ranking-account-age.json" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -131,8 +136,16 @@
       <workItem from="1624873263347" duration="3894000" />
       <workItem from="1640091254479" duration="195000" />
       <workItem from="1640091525848" duration="35000" />
-      <workItem from="1640091656011" duration="560000" />
+      <workItem from="1640091656011" duration="3235000" />
     </task>
+    <task id="LOCAL-00001" summary="add https://github.com/Tyrrrz/DiscordChatExporter to README.md">
+      <created>1640093452191</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640093452191</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,6 +162,11 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="add https://github.com/Tyrrrz/DiscordChatExporter to README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="add https://github.com/Tyrrrz/DiscordChatExporter to README.md" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -156,11 +174,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="10" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/analyzer/models/ranking/impl/AccountAgeRanking.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

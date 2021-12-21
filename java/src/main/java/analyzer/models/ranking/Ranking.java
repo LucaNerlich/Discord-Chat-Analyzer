@@ -19,5 +19,4 @@ public abstract class Ranking {
     public String getOutputFilePath() {
         return "logs/not-implemented.json";
     }
-    
 }
