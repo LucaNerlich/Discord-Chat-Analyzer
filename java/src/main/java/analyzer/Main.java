@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
@@ -100,6 +99,7 @@ public class Main {
     private static List<String> readLogs() {
         List<String> logPaths = new ArrayList<>();
 
+        // relative to working directory, so in this project, next to .idea, java and python folders
         final List<String> folderPaths = List.of(
 //                "logs/enklave",
 //                "logs/thepod",
@@ -116,7 +116,7 @@ public class Main {
             try (Stream<Path> walk = Files.walk(Paths.get(folder))) {
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".json"))
-                        .collect(Collectors.toList());
+                        .toList();
                 logPaths.addAll(result);
             } catch (IOException e) {
                 e.printStackTrace();

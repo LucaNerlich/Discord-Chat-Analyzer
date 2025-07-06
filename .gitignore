@@ -2,3 +2,6 @@
 java/.idea/workspace.xml
 java/.idea/workspace.xml
 /java/src/main/resources/logs/
+/logs/dttd/
+/logs/m10z/
+/logs/*.json
