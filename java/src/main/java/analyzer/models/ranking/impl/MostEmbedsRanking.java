@@ -5,7 +5,7 @@ import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.TreeMap;
 
 public class MostEmbedsRanking extends Ranking {
@@ -15,21 +15,21 @@ public class MostEmbedsRanking extends Ranking {
     @Getter
     private TreeMap<AuthorData, Long> mostEmbeds;
 
-    public MostEmbedsRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateEmbeds(authorDataList);
-        countEmbeds(authorDataList);
+    public MostEmbedsRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateEmbeds(authorDataCollection);
+        countEmbeds(authorDataCollection);
     }
 
-    private void calculateEmbeds(List<AuthorData> authorDataList) {
+    private void calculateEmbeds(Collection<AuthorData> authorDataCollection) {
         mostEmbeds = new TreeMap<>(new AuthorData.AuthorDataEmbedsCountComparator());
-        authorDataList.forEach(authorData -> mostEmbeds.put(authorData, authorData.getEmbedsSent()));
+        authorDataCollection.forEach(authorData -> mostEmbeds.put(authorData, authorData.getEmbedsSent()));
     }
 
-    private void countEmbeds(List<AuthorData> authorDataList) {
-        for (AuthorData authorData : authorDataList) {
-            embedsSent = embedsSent + authorData.getEmbedsSent();
-        }
+    private void countEmbeds(Collection<AuthorData> authorDataCollection) {
+        embedsSent = authorDataCollection.stream()
+                .mapToLong(AuthorData::getEmbedsSent)
+                .sum();
     }
 
     @Override

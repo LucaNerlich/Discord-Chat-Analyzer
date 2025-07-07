@@ -3,13 +3,13 @@ package analyzer.models.ranking;
 import analyzer.models.ranking.impl.*;
 import analyzer.stats.AuthorData;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
 
 public class RankingFactory {
 
-    private static final Map<RankingType, Function<List<AuthorData>, Ranking>> RANKING_CREATORS = Map.of(
+    private static final Map<RankingType, Function<Collection<AuthorData>, Ranking>> RANKING_CREATORS = Map.of(
             RankingType.MOST_MESSAGES, MostMessagesRanking::new,
             RankingType.ACCOUNT_AGE, AccountAgeRanking::new,
             RankingType.MOST_COMMON_REACTION, MostCommonReactionRanking::new,
@@ -19,11 +19,11 @@ public class RankingFactory {
             RankingType.TIMES_MENTIONED, TimesMentionedRanking::new
     );
 
-    public static Ranking createRanking(RankingType rankingType, List<AuthorData> authorDataList) {
-        Function<List<AuthorData>, Ranking> creator = RANKING_CREATORS.get(rankingType);
+    public static Ranking createRanking(RankingType rankingType, Collection<AuthorData> authorDataCollection) {
+        Function<Collection<AuthorData>, Ranking> creator = RANKING_CREATORS.get(rankingType);
         if (creator == null) {
             throw new IllegalArgumentException("Unknown ranking type: " + rankingType);
         }
-        return creator.apply(authorDataList);
+        return creator.apply(authorDataCollection);
     }
 }

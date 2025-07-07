@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Holds the analyzed data for a single Author.
@@ -17,7 +19,7 @@ public class AuthorData {
 
     private transient Author author;
     private transient LocalDate earliestLocalDate;
-    private transient List<Integer> wordsPerMessage = new ArrayList<>();
+    private transient long totalWordCount = 0; // More memory efficient than storing all counts
 
     private String authorId;
     private String firstMessageSent;
@@ -30,11 +32,11 @@ public class AuthorData {
     private Map<Emoji, Integer> emojisReceived = new TreeMap<>(new Emoji.EmojiComparator());
 
     public void addWordCount(int wordCount) {
-        wordsPerMessage.add(wordCount);
+        totalWordCount += wordCount;
     }
 
-    public int getWordCountSum() {
-        return wordsPerMessage.stream().mapToInt(Integer::intValue).sum();
+    public long getWordCountSum() {
+        return totalWordCount;
     }
 
     public void incrementMessages() {

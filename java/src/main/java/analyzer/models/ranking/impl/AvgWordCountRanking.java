@@ -7,19 +7,19 @@ import analyzer.utils.ComparatorUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class AvgWordCountRanking extends Ranking {
-    
+
     @Getter
     @Setter
     private Map<Double, String> averageWordsPerMessage = new TreeMap<>(ComparatorUtils.descendingWithTieBreaker(d -> d));
 
-    public AvgWordCountRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateAvgWordCount(authorDataList);
+    public AvgWordCountRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateAvgWordCount(authorDataCollection);
     }
 
     // round to configurable precision points
@@ -28,18 +28,17 @@ public class AvgWordCountRanking extends Ranking {
         return Math.round(value * scale) / scale;
     }
 
-    private void calculateAvgWordCount(List<AuthorData> authorDataList) {
-        authorDataList
-                .stream()
+    private void calculateAvgWordCount(Collection<AuthorData> authorDataCollection) {
+        authorDataCollection
+                .parallelStream() // Use parallel processing for better performance
                 .filter(authorData -> authorData.getMessagesSent() >= AnalyzerConfig.MIN_MESSAGES_FOR_AVG_WORD_COUNT)
+                .filter(authorData -> authorData.getWordCountSum() > 0) // Early filter
                 .forEach(authorData -> {
                     final double wordCountSum = authorData.getWordCountSum();
                     final double messagesSent = authorData.getMessagesSent();
 
-                    if (wordCountSum > 0 && messagesSent > 0) {
-                        authorData.setAverageWordsPerMessage(round(wordCountSum / messagesSent));
-                        averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
-                    }
+                    authorData.setAverageWordsPerMessage(round(wordCountSum / messagesSent));
+                    averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
                 });
     }
 

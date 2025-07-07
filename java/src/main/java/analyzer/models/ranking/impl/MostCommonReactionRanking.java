@@ -7,8 +7,8 @@ import analyzer.stats.AuthorData;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -20,26 +20,25 @@ public class MostCommonReactionRanking extends Ranking {
     @Setter
     private TreeMap<Emoji, Integer> mostCommonReaction = new TreeMap<>(new Emoji.EmojiCountComparator());
 
-    public MostCommonReactionRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateMostCommonReaction(authorDataList);
+    public MostCommonReactionRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateMostCommonReaction(authorDataCollection);
         countReactions();
     }
 
     private void countReactions() {
-        mostCommonReaction.forEach((key, value) -> reactionsGiven = reactionsGiven + value);
+        reactionsGiven = mostCommonReaction.values().stream()
+                .mapToLong(Integer::intValue)
+                .sum();
     }
 
-    private void calculateMostCommonReaction(List<AuthorData> authorDataList) {
+    private void calculateMostCommonReaction(Collection<AuthorData> authorDataCollection) {
         Map<Emoji, Integer> emojiCount = new HashMap<>();
-        authorDataList.forEach(authorData -> {
+        authorDataCollection.forEach(authorData -> {
             final Map<Emoji, Integer> emojisReceived = authorData.getEmojisReceived();
             emojisReceived.forEach((key, value) -> {
-                if (emojiCount.containsKey(key)) {
-                    emojiCount.put(key, emojiCount.get(key) + value);
-                } else {
-                    emojiCount.put(key, value);
-                }
+                // Use more efficient merge operation
+                emojiCount.merge(key, value, Integer::sum);
             });
         });
 

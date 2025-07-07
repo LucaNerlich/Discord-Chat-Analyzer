@@ -4,16 +4,16 @@ import analyzer.stats.AuthorData;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Collection;
 
 public abstract class Ranking {
 
     @Getter
     @Setter
-    private transient List<AuthorData> authorDataList;
+    private transient Collection<AuthorData> authorDataCollection;
 
-    public Ranking(List<AuthorData> authorDataList) {
-        this.authorDataList = authorDataList;
+    public Ranking(Collection<AuthorData> authorDataCollection) {
+        this.authorDataCollection = authorDataCollection;
     }
 
     public String getOutputFileName() {

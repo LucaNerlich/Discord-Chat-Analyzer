@@ -5,32 +5,32 @@ import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.TreeMap;
 
 
 public class MostMessagesRanking extends Ranking {
-    
+
     @Getter
     private long messagesSent;
     @Getter
     private TreeMap<AuthorData, Long> mostMessages;
 
-    public MostMessagesRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateMessageRanking(authorDataList);
-        countMessages(authorDataList);
+    public MostMessagesRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateMessageRanking(authorDataCollection);
+        countMessages(authorDataCollection);
     }
 
-    private void calculateMessageRanking(List<AuthorData> authorDataList) {
+    private void calculateMessageRanking(Collection<AuthorData> authorDataCollection) {
         mostMessages = new TreeMap<>(new AuthorData.AuthorDataMessagesCountComparator());
-        authorDataList.forEach(authorData -> mostMessages.put(authorData, authorData.getMessagesSent()));
+        authorDataCollection.forEach(authorData -> mostMessages.put(authorData, authorData.getMessagesSent()));
     }
 
-    private void countMessages(List<AuthorData> authorDataList) {
-        for (AuthorData authorData : authorDataList) {
-            messagesSent = messagesSent + authorData.getMessagesSent();
-        }
+    private void countMessages(Collection<AuthorData> authorDataCollection) {
+        messagesSent = authorDataCollection.stream()
+                .mapToLong(AuthorData::getMessagesSent)
+                .sum();
     }
 
     @Override

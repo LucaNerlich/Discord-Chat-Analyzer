@@ -5,7 +5,7 @@ import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.TreeMap;
 
 public class MostAttachmentsRanking extends Ranking {
@@ -15,21 +15,21 @@ public class MostAttachmentsRanking extends Ranking {
     @Getter
     private TreeMap<AuthorData, Long> mostAttachments;
 
-    public MostAttachmentsRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateAttachments(authorDataList);
-        countAttachments(authorDataList);
+    public MostAttachmentsRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateAttachments(authorDataCollection);
+        countAttachments(authorDataCollection);
     }
 
-    private void calculateAttachments(List<AuthorData> authorDataList) {
+    private void calculateAttachments(Collection<AuthorData> authorDataCollection) {
         mostAttachments = new TreeMap<>(new AuthorData.AuthorDataAttachmentsCountComparator());
-        authorDataList.forEach(authorData -> mostAttachments.put(authorData, authorData.getAttachmentsSent()));
+        authorDataCollection.forEach(authorData -> mostAttachments.put(authorData, authorData.getAttachmentsSent()));
     }
 
-    private void countAttachments(List<AuthorData> authorDataList) {
-        for (AuthorData authorData : authorDataList) {
-            attachmentsSent = attachmentsSent + authorData.getAttachmentsSent();
-        }
+    private void countAttachments(Collection<AuthorData> authorDataCollection) {
+        attachmentsSent = authorDataCollection.stream()
+                .mapToLong(AuthorData::getAttachmentsSent)
+                .sum();
     }
 
     @Override

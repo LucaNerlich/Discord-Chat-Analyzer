@@ -5,7 +5,7 @@ import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.TreeMap;
 
 
@@ -16,21 +16,21 @@ public class TimesMentionedRanking extends Ranking {
     @Getter
     private TreeMap<AuthorData, Long> timesMentioned;
 
-    public TimesMentionedRanking(List<AuthorData> authorDataList) {
-        super(authorDataList);
-        calculateMentionRanking(authorDataList);
-        countMentions(authorDataList);
+    public TimesMentionedRanking(Collection<AuthorData> authorDataCollection) {
+        super(authorDataCollection);
+        calculateMentionRanking(authorDataCollection);
+        countMentions(authorDataCollection);
     }
 
-    private void calculateMentionRanking(List<AuthorData> authorDataList) {
+    private void calculateMentionRanking(Collection<AuthorData> authorDataCollection) {
         timesMentioned = new TreeMap<>(new AuthorData.AuthorDataMentionsCountComparator());
-        authorDataList.forEach(authorData -> timesMentioned.put(authorData, authorData.getTimesMentioned()));
+        authorDataCollection.forEach(authorData -> timesMentioned.put(authorData, authorData.getTimesMentioned()));
     }
 
-    private void countMentions(List<AuthorData> authorDataList) {
-        for (AuthorData authorData : authorDataList) {
-            countMentions = countMentions + authorData.getTimesMentioned();
-        }
+    private void countMentions(Collection<AuthorData> authorDataCollection) {
+        countMentions = authorDataCollection.stream()
+                .mapToLong(AuthorData::getTimesMentioned)
+                .sum();
     }
 
     @Override

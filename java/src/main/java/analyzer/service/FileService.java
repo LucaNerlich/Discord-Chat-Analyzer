@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileService {
@@ -29,18 +30,19 @@ public class FileService {
         this.gson = new GsonBuilder()
                 .setDateFormat(DateFormat.FULL, DateFormat.FULL)
                 .setPrettyPrinting()
+                .serializeNulls() // Performance: avoid null checks during serialization
                 .create();
     }
 
-        /**
+    /**
      * Reads and parses JSON log files from a specific folder into Channel objects
      */
     public List<Channel> parseJsonToChannels(String folderPath) {
         List<String> logPaths = readLogPathsFromFolder(folderPath);
         List<Channel> channels = Collections.synchronizedList(new ArrayList<>());
-        
+
         ExceptionHandler.logInfo("Processing " + logPaths.size() + " log files from " + folderPath);
-        
+
         logPaths.parallelStream().forEach(logFilePath -> {
             try {
                 Channel channel = parseChannelFromFile(logFilePath);
@@ -51,7 +53,7 @@ public class FileService {
                 ExceptionHandler.handleFileProcessingException(e, logFilePath);
             }
         });
-        
+
         ExceptionHandler.logInfo("Successfully processed " + channels.size() + " channels from " + folderPath);
         return channels;
     }
@@ -62,7 +64,7 @@ public class FileService {
     public void writeAuthorData(Map<?, AuthorData> authorDataMap, String outputDir) {
         String outputPath = createOutputPath(outputDir, AnalyzerConfig.OUTPUT_FILE_AUTHORS);
         createOutputDirectoryIfNotExists(outputDir);
-        
+
         try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
             gson.toJson(authorDataMap, writer);
             ExceptionHandler.logInfo("Author data written to: " + outputPath);
@@ -71,7 +73,7 @@ public class FileService {
         }
     }
 
-        /**
+    /**
      * Writes ranking data to JSON file in the specified output directory
      */
     public void writeRanking(Ranking ranking, String outputDir) {
@@ -79,10 +81,10 @@ public class FileService {
             ExceptionHandler.logWarning("Attempted to write null ranking");
             return;
         }
-        
+
         String outputPath = createOutputPath(outputDir, ranking.getOutputFileName());
         createOutputDirectoryIfNotExists(outputDir);
-        
+
         try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
             gson.toJson(ranking, writer);
             ExceptionHandler.logInfo("Ranking written to: " + outputPath);
@@ -100,23 +102,23 @@ public class FileService {
         }
     }
 
-        private List<String> readLogPathsFromFolder(String folderPath) {
+    private List<String> readLogPathsFromFolder(String folderPath) {
         List<String> logPaths = new ArrayList<>();
-        
+
         try (Stream<Path> walk = Files.walk(Paths.get(folderPath))) {
             List<String> result = walk
-                .filter(path -> path.toString().endsWith(".json"))
-                .filter(path -> !containsOutputFolder(path))  // Exclude output directory files
-                .map(Path::toString)
-                .toList();
+                    .filter(path -> path.toString().endsWith(".json"))
+                    .filter(path -> !containsOutputFolder(path))  // Exclude output directory files
+                    .map(Path::toString)
+                    .collect(Collectors.toList()); // Java 11 compatible
             logPaths.addAll(result);
         } catch (IOException e) {
             ExceptionHandler.handleIOException(e, "reading log paths from: " + folderPath);
         }
-        
+
         return logPaths;
     }
-    
+
     /**
      * Checks if the given path contains the output subfolder
      */
@@ -128,7 +130,7 @@ public class FileService {
         }
         return false;
     }
-    
+
     /**
      * Creates output directory path based on input folder name
      */
@@ -137,14 +139,14 @@ public class FileService {
         String folderName = Paths.get(inputFolderPath).getFileName().toString();
         return inputFolderPath + "/" + AnalyzerConfig.OUTPUT_SUBFOLDER;
     }
-    
+
     /**
      * Creates the full output path by combining output directory and filename
      */
     private String createOutputPath(String outputDir, String filename) {
         return outputDir + "/" + filename;
     }
-    
+
     /**
      * Creates output directory if it doesn't exist
      */
