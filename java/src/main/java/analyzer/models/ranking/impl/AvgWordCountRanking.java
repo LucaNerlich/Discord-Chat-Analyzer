@@ -12,8 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AvgWordCountRanking extends Ranking {
-
-    private static final String OUTPUT_FILE_NAME = "logs/ranking-most-attachments.json";
+    
     @Getter
     @Setter
     private Map<Double, String> averageWordsPerMessage = new TreeMap<>(ComparatorUtils.descendingWithTieBreaker(d -> d));
@@ -45,7 +44,7 @@ public class AvgWordCountRanking extends Ranking {
     }
 
     @Override
-    public String getOutputFilePath() {
-        return OUTPUT_FILE_NAME;
+    public String getOutputFileName() {
+        return AnalyzerConfig.RANKING_AVG_WORD_COUNT;
     }
 }

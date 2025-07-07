@@ -32,15 +32,15 @@ public class FileService {
                 .create();
     }
 
-    /**
-     * Reads and parses all JSON log files into Channel objects
+        /**
+     * Reads and parses JSON log files from a specific folder into Channel objects
      */
-    public List<Channel> parseJsonToChannels() {
-        List<String> logPaths = readLogPaths();
+    public List<Channel> parseJsonToChannels(String folderPath) {
+        List<String> logPaths = readLogPathsFromFolder(folderPath);
         List<Channel> channels = Collections.synchronizedList(new ArrayList<>());
-
-        ExceptionHandler.logInfo("Processing " + logPaths.size() + " log files");
-
+        
+        ExceptionHandler.logInfo("Processing " + logPaths.size() + " log files from " + folderPath);
+        
         logPaths.parallelStream().forEach(logFilePath -> {
             try {
                 Channel channel = parseChannelFromFile(logFilePath);
@@ -51,35 +51,41 @@ public class FileService {
                 ExceptionHandler.handleFileProcessingException(e, logFilePath);
             }
         });
-
-        ExceptionHandler.logInfo("Successfully processed " + channels.size() + " channels");
+        
+        ExceptionHandler.logInfo("Successfully processed " + channels.size() + " channels from " + folderPath);
         return channels;
     }
 
     /**
-     * Writes author data to JSON file
+     * Writes author data to JSON file in the specified output directory
      */
-    public void writeAuthorData(Map<?, AuthorData> authorDataMap) {
-        try (Writer writer = Files.newBufferedWriter(Paths.get(AnalyzerConfig.OUTPUT_FILE_AUTHORS))) {
+    public void writeAuthorData(Map<?, AuthorData> authorDataMap, String outputDir) {
+        String outputPath = createOutputPath(outputDir, AnalyzerConfig.OUTPUT_FILE_AUTHORS);
+        createOutputDirectoryIfNotExists(outputDir);
+        
+        try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
             gson.toJson(authorDataMap, writer);
-            ExceptionHandler.logInfo("Author data written to: " + AnalyzerConfig.OUTPUT_FILE_AUTHORS);
+            ExceptionHandler.logInfo("Author data written to: " + outputPath);
         } catch (IOException e) {
             ExceptionHandler.handleIOException(e, "writing author data");
         }
     }
 
-    /**
-     * Writes ranking data to JSON file
+        /**
+     * Writes ranking data to JSON file in the specified output directory
      */
-    public void writeRanking(Ranking ranking) {
+    public void writeRanking(Ranking ranking, String outputDir) {
         if (ranking == null) {
             ExceptionHandler.logWarning("Attempted to write null ranking");
             return;
         }
-
-        try (Writer writer = Files.newBufferedWriter(Paths.get(ranking.getOutputFilePath()))) {
+        
+        String outputPath = createOutputPath(outputDir, ranking.getOutputFileName());
+        createOutputDirectoryIfNotExists(outputDir);
+        
+        try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
             gson.toJson(ranking, writer);
-            ExceptionHandler.logInfo("Ranking written to: " + ranking.getOutputFilePath());
+            ExceptionHandler.logInfo("Ranking written to: " + outputPath);
         } catch (IOException e) {
             ExceptionHandler.handleIOException(e, "writing ranking: " + ranking.getClass().getSimpleName());
         }
@@ -94,21 +100,63 @@ public class FileService {
         }
     }
 
-    private List<String> readLogPaths() {
+        private List<String> readLogPathsFromFolder(String folderPath) {
         List<String> logPaths = new ArrayList<>();
-
-        for (String folderPath : AnalyzerConfig.LOG_FOLDER_PATHS) {
-            try (Stream<Path> walk = Files.walk(Paths.get(folderPath))) {
-                List<String> result = walk
-                        .map(Path::toString)
-                        .filter(f -> f.endsWith(".json"))
-                        .toList();
-                logPaths.addAll(result);
-            } catch (IOException e) {
-                ExceptionHandler.handleIOException(e, "reading log paths from: " + folderPath);
+        
+        try (Stream<Path> walk = Files.walk(Paths.get(folderPath))) {
+            List<String> result = walk
+                .filter(path -> path.toString().endsWith(".json"))
+                .filter(path -> !containsOutputFolder(path))  // Exclude output directory files
+                .map(Path::toString)
+                .toList();
+            logPaths.addAll(result);
+        } catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "reading log paths from: " + folderPath);
+        }
+        
+        return logPaths;
+    }
+    
+    /**
+     * Checks if the given path contains the output subfolder
+     */
+    private boolean containsOutputFolder(Path path) {
+        for (Path part : path) {
+            if (part.toString().equals(AnalyzerConfig.OUTPUT_SUBFOLDER)) {
+                return true;
             }
         }
-
-        return logPaths;
+        return false;
+    }
+    
+    /**
+     * Creates output directory path based on input folder name
+     */
+    public String createOutputDirectory(String inputFolderPath) {
+        // Extract folder name from path (e.g., "logs/m10z" -> "m10z")
+        String folderName = Paths.get(inputFolderPath).getFileName().toString();
+        return inputFolderPath + "/" + AnalyzerConfig.OUTPUT_SUBFOLDER;
+    }
+    
+    /**
+     * Creates the full output path by combining output directory and filename
+     */
+    private String createOutputPath(String outputDir, String filename) {
+        return outputDir + "/" + filename;
+    }
+    
+    /**
+     * Creates output directory if it doesn't exist
+     */
+    private void createOutputDirectoryIfNotExists(String outputDir) {
+        try {
+            Path path = Paths.get(outputDir);
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+                ExceptionHandler.logInfo("Created output directory: " + outputDir);
+            }
+        } catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "creating output directory: " + outputDir);
+        }
     }
 }

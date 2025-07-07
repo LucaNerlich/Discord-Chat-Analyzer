@@ -9,29 +9,23 @@ public final class AnalyzerConfig {
     public static final int MIN_MESSAGES_FOR_AVG_WORD_COUNT = 10;
     public static final int DECIMAL_PRECISION = 2;
 
-    // File Paths
-    public static final String OUTPUT_FILE_AUTHORS = "logs/output-all.json";
-    public static final String RANKING_MOST_MESSAGES = "logs/ranking-most-messages.json";
-    public static final String RANKING_ACCOUNT_AGE = "logs/ranking-account-age.json";
-    public static final String RANKING_MOST_COMMON_REACTION = "logs/ranking-most-common-reaction.json";
-    public static final String RANKING_AVG_WORD_COUNT = "logs/ranking-avg-word-count.json";
-    public static final String RANKING_MOST_EMBEDS = "logs/ranking-most-embeds.json";
-    public static final String RANKING_MOST_ATTACHMENTS = "logs/ranking-most-attachments.json";
-    public static final String RANKING_TIMES_MENTIONED = "logs/ranking-times-mentioned.json";
+    // File Names (will be combined with output directory)
+    public static final String OUTPUT_FILE_AUTHORS = "output-all.json";
+    public static final String RANKING_MOST_MESSAGES = "ranking-most-messages.json";
+    public static final String RANKING_ACCOUNT_AGE = "ranking-account-age.json";
+    public static final String RANKING_MOST_COMMON_REACTION = "ranking-most-common-reaction.json";
+    public static final String RANKING_AVG_WORD_COUNT = "ranking-avg-word-count.json";
+    public static final String RANKING_MOST_EMBEDS = "ranking-most-embeds.json";
+    public static final String RANKING_MOST_ATTACHMENTS = "ranking-most-attachments.json";
+    public static final String RANKING_TIMES_MENTIONED = "ranking-times-mentioned.json";
+
+    // Output directory structure
+    public static final String OUTPUT_SUBFOLDER = "output";
 
     // Data Source Folders
     public static final List<String> LOG_FOLDER_PATHS = List.of(
-            // Uncomment the folders you want to analyze
-            "logs/m10z"
-            // "logs/enklave",
-            // "logs/thepod",
-            // "logs/okcool",
-            // "logs/stayforever",
-            // "logs/hooked",
-            // "logs/nextjs",
-            // "logs/computerbase",
-            // "logs/insertmoin",
-            // "logs/m10z"
+            "logs/m10z",
+            "logs/dttd"
     );
 
     // Threading Configuration

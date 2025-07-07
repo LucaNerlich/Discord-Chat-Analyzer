@@ -1,5 +1,6 @@
 package analyzer.models.ranking.impl;
 
+import analyzer.config.AnalyzerConfig;
 import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
@@ -9,8 +10,6 @@ import java.util.TreeMap;
 
 
 public class TimesMentionedRanking extends Ranking {
-
-    private static final String OUTPUT_FILE_NAME = "logs/ranking-times-mentioned.json";
 
     @Getter
     private long countMentions;
@@ -35,7 +34,7 @@ public class TimesMentionedRanking extends Ranking {
     }
 
     @Override
-    public String getOutputFilePath() {
-        return OUTPUT_FILE_NAME;
+    public String getOutputFileName() {
+        return AnalyzerConfig.RANKING_TIMES_MENTIONED;
     }
 }

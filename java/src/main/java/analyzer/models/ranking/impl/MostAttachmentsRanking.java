@@ -1,5 +1,6 @@
 package analyzer.models.ranking.impl;
 
+import analyzer.config.AnalyzerConfig;
 import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
@@ -8,8 +9,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class MostAttachmentsRanking extends Ranking {
-
-    private static final String OUTPUT_FILE_NAME = "logs/ranking-most-attachments.json";
 
     @Getter
     private long attachmentsSent;
@@ -34,7 +33,7 @@ public class MostAttachmentsRanking extends Ranking {
     }
 
     @Override
-    public String getOutputFilePath() {
-        return OUTPUT_FILE_NAME;
+    public String getOutputFileName() {
+        return AnalyzerConfig.RANKING_MOST_ATTACHMENTS;
     }
 }

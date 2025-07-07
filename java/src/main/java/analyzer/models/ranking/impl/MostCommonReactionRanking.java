@@ -1,5 +1,6 @@
 package analyzer.models.ranking.impl;
 
+import analyzer.config.AnalyzerConfig;
 import analyzer.models.message.reaction.Emoji;
 import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
@@ -12,8 +13,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MostCommonReactionRanking extends Ranking {
-
-    private static final String OUTPUT_FILE_NAME = "logs/ranking-most-common-reaction.json";
 
     @Getter
     private long reactionsGiven;
@@ -52,7 +51,7 @@ public class MostCommonReactionRanking extends Ranking {
     }
 
     @Override
-    public String getOutputFilePath() {
-        return OUTPUT_FILE_NAME;
+    public String getOutputFileName() {
+        return AnalyzerConfig.RANKING_MOST_COMMON_REACTION;
     }
 }
