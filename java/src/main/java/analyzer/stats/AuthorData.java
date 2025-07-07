@@ -53,7 +53,7 @@ public class AuthorData {
         attachmentsSent++;
     }
     
-    public void incrementEmbdes() {
+    public void incrementEmbeds() {
         embedsSent++;
     }
     

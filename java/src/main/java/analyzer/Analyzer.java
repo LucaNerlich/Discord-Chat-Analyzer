@@ -1,5 +1,6 @@
 package analyzer;
 
+import analyzer.config.AnalyzerConfig;
 import analyzer.models.Author;
 import analyzer.models.channel.Channel;
 import analyzer.models.message.Attachment;
@@ -9,9 +10,10 @@ import analyzer.models.message.embed.Embed;
 import analyzer.models.message.reaction.Emoji;
 import analyzer.models.message.reaction.Reaction;
 import analyzer.models.ranking.Ranking;
+import analyzer.models.ranking.RankingFactory;
 import analyzer.models.ranking.RankingType;
-import analyzer.models.ranking.impl.*;
 import analyzer.stats.AuthorData;
+import analyzer.utils.ExceptionHandler;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -24,7 +26,6 @@ import java.util.TreeMap;
 public class Analyzer {
 
     private final Map<Author, AuthorData> authorDataMap;
-    private static final int MIN_AMOUNT_MESSAGES = 10;
 
     public Analyzer(final List<Channel> channels) {
         this.authorDataMap = new TreeMap<>(new Author.AuthorComparator());
@@ -39,38 +40,12 @@ public class Analyzer {
     }
 
     public Ranking getRanking(RankingType rankingType) {
-        Ranking result = null;
-
-        switch (rankingType) {
-            case MOST_MESSAGES:
-                result = new MostMessagesRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case ACCOUNT_AGE:
-                result = new AccountAgeRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case MOST_COMMON_REACTION:
-                result = new MostCommonReactionRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case AVG_WORD_COUNT:
-                result = new AvgWordCountRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case MOST_EMBEDS:
-                result = new MostEmbedsRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case MOST_ATTACHMENTS:
-                result = new MostAttachmentsRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-            case TIMES_MENTIONED:
-                result = new TimesMentionedRanking(new LinkedList<>(authorDataMap.values()));
-                break;
-        }
-
-        return result;
+        return RankingFactory.createRanking(rankingType, new LinkedList<>(authorDataMap.values()));
     }
 
     private void removeAuthors() {
         authorDataMap.values().removeIf(
-                authorData -> authorData.getMessagesSent() < MIN_AMOUNT_MESSAGES
+                authorData -> authorData.getMessagesSent() < AnalyzerConfig.MIN_AMOUNT_MESSAGES
         );
     }
 
@@ -136,7 +111,7 @@ public class Analyzer {
     private void analyzeEmbeds(AuthorData authorData, Message message) {
         final Embed[] embeds = message.getEmbeds();
         if (embeds != null && embeds.length > 0) {
-            authorData.incrementEmbdes();
+            authorData.incrementEmbeds();
         }
     }
 

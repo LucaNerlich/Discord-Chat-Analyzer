@@ -57,16 +57,17 @@ public class Author {
     }
 
     public void setNickname(String nickname) {
-        if (nickname.contains("\\")) {
-            this.nickname = nickname.replace("\\", "\\\\");
-        }
-        this.nickname = nickname;
+        this.nickname = escapeBackslashes(nickname);
     }
 
     public String getNickname() {
-        if (nickname.contains("\\")) {
-            return nickname.replace("\\", "\\\\");
-        }
         return nickname;
+    }
+    
+    private static String escapeBackslashes(String input) {
+        if (input != null && input.contains("\\")) {
+            return input.replace("\\", "\\\\");
+        }
+        return input;
     }
 }

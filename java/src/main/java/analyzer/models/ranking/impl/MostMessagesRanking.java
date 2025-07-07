@@ -1,5 +1,6 @@
 package analyzer.models.ranking.impl;
 
+import analyzer.config.AnalyzerConfig;
 import analyzer.models.ranking.Ranking;
 import analyzer.stats.AuthorData;
 import lombok.Getter;
@@ -9,8 +10,6 @@ import java.util.TreeMap;
 
 
 public class MostMessagesRanking extends Ranking {
-    
-    private static final transient String OUTPUT_FILE_NAME = "logs/ranking-most-messages.json";
     
     @Getter
     private long messagesSent;
@@ -36,6 +35,6 @@ public class MostMessagesRanking extends Ranking {
     
     @Override
     public String getOutputFilePath() {
-        return OUTPUT_FILE_NAME;
+        return AnalyzerConfig.RANKING_MOST_MESSAGES;
     }
 }
