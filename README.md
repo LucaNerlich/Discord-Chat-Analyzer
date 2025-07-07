@@ -50,9 +50,6 @@ rankings about user activity, engagement, and behavior patterns.
     * [Building from Source](#building-from-source)
     * [Adding New Rankings](#adding-new-rankings)
     * [Project Structure](#project-structure)
-  * [🤝 Contributing](#-contributing)
-    * [Guidelines](#guidelines)
-    * [Code Style](#code-style)
   * [📝 Example Data Format](#-example-data-format)
     * [Input (Discord Export JSON)](#input-discord-export-json)
     * [Output (Ranking JSON)](#output-ranking-json)
@@ -339,22 +336,6 @@ src/main/java/analyzer/
 ├── stats/            # Statistics and data analysis
 └── utils/            # Utility classes and helpers
 ```
-
-## 🤝 Contributing
-
-### Guidelines
-
-1. **Performance First**: Maintain or improve performance characteristics
-2. **Memory Efficiency**: Consider memory impact of changes
-3. **Parallel Safety**: Ensure thread safety for concurrent operations
-4. **Documentation**: Update README for significant changes
-
-### Code Style
-
-- **Java 21** language features preferred
-- **Stream API** for data processing
-- **Lombok** for reducing boilerplate
-- **Proper exception handling** with logging
 
 ## 📝 Example Data Format
 
