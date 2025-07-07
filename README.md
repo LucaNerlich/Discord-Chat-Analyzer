@@ -57,14 +57,10 @@ rankings about user activity, engagement, and behavior patterns.
     * [Input (Discord Export JSON)](#input-discord-export-json)
     * [Output (Ranking JSON)](#output-ranking-json)
   * [🐛 Troubleshooting](#-troubleshooting)
-    * [Common Issues](#common-issues)
-      * [Out of Memory Error](#out-of-memory-error)
-      * [File Not Found](#file-not-found)
-      * [Performance Issues](#performance-issues)
-    * [Logging](#logging)
+    * [Out of Memory Error](#out-of-memory-error)
+    * [File Not Found](#file-not-found)
+    * [Performance Issues](#performance-issues)
   * [📄 License](#-license)
-  * [🙏 Acknowledgments](#-acknowledgments)
-  * [📚 Further Reading](#-further-reading)
 <!-- TOC -->
 
 ## 🚀 Features
@@ -410,50 +406,28 @@ src/main/java/analyzer/
 
 ## 🐛 Troubleshooting
 
-### Common Issues
-
-#### Out of Memory Error
+### Out of Memory Error
 
 ```bash
 # Increase heap size
 mvn exec:java -Dexec.mainClass="analyzer.Main" -Dexec.args="-Xmx8g"
 ```
 
-#### File Not Found
+### File Not Found
 
 - Verify Discord export JSON files are in configured directories
 - Check that `LOG_FOLDER_PATHS` matches your folder structure
 - Ensure JSON files are valid Discord exports
 
-#### Performance Issues
+### Performance Issues
 
 - Increase `THREAD_POOL_SIZE` for more parallel processing
 - Ensure sufficient RAM available
 - Consider processing servers separately for very large datasets
 
-### Logging
-
-The application uses Java's built-in logging. Check console output for:
-
-- Processing progress updates
-- File processing status
-- Error messages and stack traces
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **Discord**: For providing comprehensive chat export functionality
-- **Java Community**: For excellent parallel processing and stream APIs
-- **Contributors**: Everyone who helped optimize and improve this tool
-
-## 📚 Further Reading
-
-- [Discord Data Export Guide](https://support.discord.com/hc/en-us/articles/360004027692)
-- [Java Stream API Documentation](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html)
-- [Maven Build Tool](https://maven.apache.org/guides/getting-started/)
 
 ---
 
