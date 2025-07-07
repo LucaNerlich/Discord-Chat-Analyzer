@@ -5,3 +5,4 @@ java/.idea/workspace.xml
 /logs/dttd/
 /logs/m10z/
 /logs/*.json
+/target
