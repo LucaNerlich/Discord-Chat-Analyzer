@@ -12,18 +12,23 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AvgWordCountRanking extends Ranking {
-    
+
+    private static final String OUTPUT_FILE_NAME = "logs/ranking-most-attachments.json";
     @Getter
     @Setter
     private Map<Double, String> averageWordsPerMessage = new TreeMap<>(ComparatorUtils.descendingWithTieBreaker(d -> d));
-    
+
     public AvgWordCountRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
         calculateAvgWordCount(authorDataList);
     }
-    
 
-    
+    // round to configurable precision points
+    private static double round(double value) {
+        double scale = Math.pow(10, AnalyzerConfig.DECIMAL_PRECISION);
+        return Math.round(value * scale) / scale;
+    }
+
     private void calculateAvgWordCount(List<AuthorData> authorDataList) {
         authorDataList
                 .stream()
@@ -31,22 +36,16 @@ public class AvgWordCountRanking extends Ranking {
                 .forEach(authorData -> {
                     final double wordCountSum = authorData.getWordCountSum();
                     final double messagesSent = authorData.getMessagesSent();
-                    
+
                     if (wordCountSum > 0 && messagesSent > 0) {
                         authorData.setAverageWordsPerMessage(round(wordCountSum / messagesSent));
                         averageWordsPerMessage.put(authorData.getAverageWordsPerMessage(), authorData.getAuthor().getNickname());
                     }
                 });
     }
-    
-    // round to configurable precision points
-    private static double round(double value) {
-        double scale = Math.pow(10, AnalyzerConfig.DECIMAL_PRECISION);
-        return Math.round(value * scale) / scale;
-    }
-    
+
     @Override
     public String getOutputFilePath() {
-        return AnalyzerConfig.RANKING_AVG_WORD_COUNT;
+        return OUTPUT_FILE_NAME;
     }
 }

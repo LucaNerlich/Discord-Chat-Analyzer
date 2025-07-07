@@ -21,17 +21,17 @@ public final class AnalyzerConfig {
 
     // Data Source Folders
     public static final List<String> LOG_FOLDER_PATHS = List.of(
-        // Uncomment the folders you want to analyze
-        "logs/m10z"
-        // "logs/enklave",
-        // "logs/thepod",
-        // "logs/okcool",
-        // "logs/stayforever",
-        // "logs/hooked",
-        // "logs/nextjs",
-        // "logs/computerbase",
-        // "logs/insertmoin",
-        // "logs/m10z"
+            // Uncomment the folders you want to analyze
+            "logs/m10z"
+            // "logs/enklave",
+            // "logs/thepod",
+            // "logs/okcool",
+            // "logs/stayforever",
+            // "logs/hooked",
+            // "logs/nextjs",
+            // "logs/computerbase",
+            // "logs/insertmoin",
+            // "logs/m10z"
     );
 
     // Threading Configuration

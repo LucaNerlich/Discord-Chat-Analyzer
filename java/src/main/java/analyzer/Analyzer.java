@@ -13,7 +13,6 @@ import analyzer.models.ranking.Ranking;
 import analyzer.models.ranking.RankingFactory;
 import analyzer.models.ranking.RankingType;
 import analyzer.stats.AuthorData;
-import analyzer.utils.ExceptionHandler;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 

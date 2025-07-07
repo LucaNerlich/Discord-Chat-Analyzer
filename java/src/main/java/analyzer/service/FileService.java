@@ -22,25 +22,25 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class FileService {
-    
+
     private final Gson gson;
-    
+
     public FileService() {
         this.gson = new GsonBuilder()
-            .setDateFormat(DateFormat.FULL, DateFormat.FULL)
-            .setPrettyPrinting()
-            .create();
+                .setDateFormat(DateFormat.FULL, DateFormat.FULL)
+                .setPrettyPrinting()
+                .create();
     }
-    
+
     /**
      * Reads and parses all JSON log files into Channel objects
      */
     public List<Channel> parseJsonToChannels() {
         List<String> logPaths = readLogPaths();
         List<Channel> channels = Collections.synchronizedList(new ArrayList<>());
-        
+
         ExceptionHandler.logInfo("Processing " + logPaths.size() + " log files");
-        
+
         logPaths.parallelStream().forEach(logFilePath -> {
             try {
                 Channel channel = parseChannelFromFile(logFilePath);
@@ -51,11 +51,11 @@ public class FileService {
                 ExceptionHandler.handleFileProcessingException(e, logFilePath);
             }
         });
-        
+
         ExceptionHandler.logInfo("Successfully processed " + channels.size() + " channels");
         return channels;
     }
-    
+
     /**
      * Writes author data to JSON file
      */
@@ -67,7 +67,7 @@ public class FileService {
             ExceptionHandler.handleIOException(e, "writing author data");
         }
     }
-    
+
     /**
      * Writes ranking data to JSON file
      */
@@ -76,7 +76,7 @@ public class FileService {
             ExceptionHandler.logWarning("Attempted to write null ranking");
             return;
         }
-        
+
         try (Writer writer = Files.newBufferedWriter(Paths.get(ranking.getOutputFilePath()))) {
             gson.toJson(ranking, writer);
             ExceptionHandler.logInfo("Ranking written to: " + ranking.getOutputFilePath());
@@ -84,7 +84,7 @@ public class FileService {
             ExceptionHandler.handleIOException(e, "writing ranking: " + ranking.getClass().getSimpleName());
         }
     }
-    
+
     private Channel parseChannelFromFile(String logFilePath) {
         try (Reader reader = Files.newBufferedReader(Paths.get(logFilePath))) {
             return gson.fromJson(reader, Channel.class);
@@ -93,22 +93,22 @@ public class FileService {
             return null;
         }
     }
-    
+
     private List<String> readLogPaths() {
         List<String> logPaths = new ArrayList<>();
-        
+
         for (String folderPath : AnalyzerConfig.LOG_FOLDER_PATHS) {
             try (Stream<Path> walk = Files.walk(Paths.get(folderPath))) {
                 List<String> result = walk
-                    .map(Path::toString)
-                    .filter(f -> f.endsWith(".json"))
-                    .toList();
+                        .map(Path::toString)
+                        .filter(f -> f.endsWith(".json"))
+                        .toList();
                 logPaths.addAll(result);
             } catch (IOException e) {
                 ExceptionHandler.handleIOException(e, "reading log paths from: " + folderPath);
             }
         }
-        
+
         return logPaths;
     }
-} 
+}

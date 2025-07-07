@@ -13,10 +13,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    
+
     public static void main(String[] args) {
         ExceptionHandler.logInfo("Starting Discord Chat Analysis");
-        
+
         final FileService fileService = new FileService();
         final List<Channel> channels = fileService.parseJsonToChannels();
         final Analyzer analyzer = new Analyzer(channels);
@@ -26,7 +26,7 @@ public class Main {
 
         // Write Rankings in parallel
         writeRankings(analyzer, fileService);
-        
+
         ExceptionHandler.logInfo("Analysis completed successfully");
     }
 

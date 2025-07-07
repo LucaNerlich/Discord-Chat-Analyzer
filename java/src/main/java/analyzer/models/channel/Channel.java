@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Channel {
-    
+
     private Guild guild;
     private ChannelInfo channel;
     private DateRange dateRange;

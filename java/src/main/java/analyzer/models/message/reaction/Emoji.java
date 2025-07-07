@@ -16,20 +16,6 @@ public class Emoji {
     private String imageUrl;
     private transient Integer count;
 
-
-    public static class EmojiCountComparator implements Comparator<Emoji> {
-        @Override
-        public int compare(Emoji o1, Emoji o2) {
-            final int compare = o2.count.compareTo(o1.count);
-
-            if (compare == 0) {
-                return 1;
-            } else {
-                return compare;
-            }
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -54,6 +40,19 @@ public class Emoji {
     @Override
     public String toString() {
         return name;
+    }
+
+    public static class EmojiCountComparator implements Comparator<Emoji> {
+        @Override
+        public int compare(Emoji o1, Emoji o2) {
+            final int compare = o2.count.compareTo(o1.count);
+
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
+        }
     }
 
     public static class EmojiComparator implements Comparator<Emoji> {

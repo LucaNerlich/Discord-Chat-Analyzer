@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class AccountAgeRanking extends Ranking {
-    
-    private static final transient String OUTPUT_FILE_NAME = "logs/ranking-account-age.json";
-    
+
+    private static final String OUTPUT_FILE_NAME = "logs/ranking-account-age.json";
+
     @Getter
     private TreeMap<AuthorData, String> joinedServer;
-    
+
     public AccountAgeRanking(List<AuthorData> authorDataList) {
         super(authorDataList);
         calculateAccountAgeRanking(authorDataList);
     }
-    
+
     // todo bug, somehow does not add a lot of accounts
     private void calculateAccountAgeRanking(List<AuthorData> authorDataList) {
         joinedServer = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
@@ -26,7 +26,7 @@ public class AccountAgeRanking extends Ranking {
                 .filter(authorData -> authorData.getMessagesSent() >= 10)
                 .forEach(authorData -> joinedServer.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
     }
-    
+
     @Override
     public String getOutputFilePath() {
         return OUTPUT_FILE_NAME;

@@ -4,11 +4,11 @@ import java.util.Comparator;
 import java.util.function.Function;
 
 public final class ComparatorUtils {
-    
+
     private ComparatorUtils() {
         // Utility class - prevent instantiation
     }
-    
+
     /**
      * Creates a comparator that sorts in descending order and handles ties by returning 1
      * This is useful for TreeMap when you want to allow duplicate values
@@ -21,7 +21,7 @@ public final class ComparatorUtils {
             return compare == 0 ? 1 : compare; // Handle ties
         };
     }
-    
+
     /**
      * Creates a comparator that sorts in ascending order and handles ties by returning 1
      */
@@ -33,7 +33,7 @@ public final class ComparatorUtils {
             return compare == 0 ? 1 : compare; // Handle ties
         };
     }
-    
+
     /**
      * Creates a case-insensitive string comparator with tie breaker
      */
@@ -41,13 +41,13 @@ public final class ComparatorUtils {
         return (o1, o2) -> {
             String str1 = keyExtractor.apply(o1);
             String str2 = keyExtractor.apply(o2);
-            
+
             if (str1 == null || str2 == null) {
                 return 0;
             }
-            
+
             int compare = str1.compareToIgnoreCase(str2);
             return compare == 0 ? 1 : compare;
         };
     }
-} 
+}

@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 public class MostCommonReactionRanking extends Ranking {
 
-    private static final transient String OUTPUT_FILE_NAME = "logs/ranking-most-common-reaction.json";
+    private static final String OUTPUT_FILE_NAME = "logs/ranking-most-common-reaction.json";
 
     @Getter
     private long reactionsGiven;

@@ -21,6 +21,13 @@ public class Author {
     private String url;
     private String iconUrl;
 
+    private static String escapeBackslashes(String input) {
+        if (input != null && input.contains("\\")) {
+            return input.replace("\\", "\\\\");
+        }
+        return input;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -43,6 +50,14 @@ public class Author {
         return nickname;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = escapeBackslashes(nickname);
+    }
+
     public static class AuthorComparator implements Comparator<Author> {
         @Override
         public int compare(Author o1, Author o2) {
@@ -54,20 +69,5 @@ public class Author {
 
             return result;
         }
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = escapeBackslashes(nickname);
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-    
-    private static String escapeBackslashes(String input) {
-        if (input != null && input.contains("\\")) {
-            return input.replace("\\", "\\\\");
-        }
-        return input;
     }
 }
