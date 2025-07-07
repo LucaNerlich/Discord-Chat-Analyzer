@@ -3,7 +3,7 @@
 A high-performance Java application for analyzing Discord chat exports and generating comprehensive statistics and
 rankings about user activity, engagement, and behavior patterns.
 
-Download logs via https://github.com/Tyrrrz/DiscordChatExporter.
+
 
 ## 🚀 Features
 
@@ -41,7 +41,7 @@ Download logs via https://github.com/Tyrrrz/DiscordChatExporter.
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:LucaNerlich/Discord-Chat-Analyzer.git
 cd discordchatanalyzer/java
 ```
 
@@ -64,6 +64,8 @@ public static final List<String> LOG_FOLDER_PATHS = List.of(
 ```
 
 ### 4. Prepare Discord Export Data
+
+Download logs via https://github.com/Tyrrrz/DiscordChatExporter.
 
 Place your Discord chat export JSON files in the configured folders:
 
