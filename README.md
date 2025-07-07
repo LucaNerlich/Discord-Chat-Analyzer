@@ -3,63 +3,6 @@
 A high-performance Java application for analyzing Discord chat exports and generating comprehensive statistics and
 rankings about user activity, engagement, and behavior patterns.
 
-<!-- TOC -->
-* [Discord Chat Analyzer](#discord-chat-analyzer)
-  * [🚀 Features](#-features)
-    * [📊 Analytics & Rankings](#-analytics--rankings)
-    * [⚡ Performance Optimizations](#-performance-optimizations)
-    * [🗂️ Organization Features](#-organization-features)
-  * [📋 Requirements](#-requirements)
-  * [🛠️ Installation & Setup](#-installation--setup)
-    * [1. Clone the Repository](#1-clone-the-repository)
-    * [2. Build the Project](#2-build-the-project)
-    * [3. Configure Data Sources](#3-configure-data-sources)
-    * [4. Prepare Discord Export Data](#4-prepare-discord-export-data)
-  * [🚀 Usage](#-usage)
-    * [Running the Analysis](#running-the-analysis)
-    * [Example Output Structure](#example-output-structure)
-  * [📊 Analysis Types](#-analysis-types)
-    * [1. User Activity Rankings](#1-user-activity-rankings)
-      * [Most Messages](#most-messages)
-      * [Average Word Count](#average-word-count)
-      * [Account Age](#account-age)
-    * [2. Engagement Rankings](#2-engagement-rankings)
-      * [Most Common Reactions](#most-common-reactions)
-      * [Times Mentioned](#times-mentioned)
-    * [3. Content Rankings](#3-content-rankings)
-      * [Most Attachments](#most-attachments)
-      * [Most Embeds](#most-embeds)
-    * [4. Complete User Data](#4-complete-user-data)
-  * [⚙️ Configuration](#-configuration)
-    * [Performance Settings](#performance-settings)
-    * [Data Source Configuration](#data-source-configuration)
-  * [🏗️ Architecture](#-architecture)
-    * [Core Components](#core-components)
-      * [`Analyzer`](#analyzer)
-      * [`FileService`](#fileservice)
-      * [`RankingFactory`](#rankingfactory)
-      * [`AuthorData`](#authordata)
-    * [Performance Features](#performance-features)
-      * [Memory Optimization](#memory-optimization)
-      * [Parallel Processing](#parallel-processing)
-      * [Algorithmic Improvements](#algorithmic-improvements)
-  * [📈 Performance Characteristics](#-performance-characteristics)
-    * [Expected Speedup](#expected-speedup)
-    * [Memory Usage](#memory-usage)
-  * [🔧 Development](#-development)
-    * [Building from Source](#building-from-source)
-    * [Adding New Rankings](#adding-new-rankings)
-    * [Project Structure](#project-structure)
-  * [📝 Example Data Format](#-example-data-format)
-    * [Input (Discord Export JSON)](#input-discord-export-json)
-    * [Output (Ranking JSON)](#output-ranking-json)
-  * [🐛 Troubleshooting](#-troubleshooting)
-    * [Out of Memory Error](#out-of-memory-error)
-    * [File Not Found](#file-not-found)
-    * [Performance Issues](#performance-issues)
-  * [📄 License](#-license)
-<!-- TOC -->
-
 ## 🚀 Features
 
 ### 📊 Analytics & Rankings
@@ -210,11 +153,6 @@ logs/
 - **File**: `ranking-most-embeds.json`
 - **Content**: Users ranked by number of embeds posted
 
-### 4. Complete User Data
-
-- **File**: `output-all.json`
-- **Content**: Comprehensive statistics for all users meeting minimum message threshold
-
 ## ⚙️ Configuration
 
 ### Performance Settings
@@ -242,69 +180,50 @@ public static final List<String> LOG_FOLDER_PATHS = List.of(
     );
 ```
 
-## 🏗️ Architecture
-
-### Core Components
-
-#### `Analyzer`
-
-- **Purpose**: Main analysis engine
-- **Features**: Parallel channel processing, memory-efficient algorithms
-- **Optimizations**: Single-pass analysis with deferred calculations
-
-#### `FileService`
-
-- **Purpose**: File I/O operations and JSON processing
-- **Features**: Parallel file reading, organized output structure
-- **Safety**: Automatic output directory exclusion from input processing
-
-#### `RankingFactory`
-
-- **Purpose**: Creates ranking implementations using factory pattern
-- **Benefits**: Extensible design, easy to add new ranking types
-
-#### `AuthorData`
-
-- **Purpose**: Efficient storage of user statistics
-- **Optimizations**: Memory-efficient word counting, streamlined data structure
-
-### Performance Features
-
-#### Memory Optimization
-
-- **Efficient Word Counting**: Accumulative counting instead of storing all individual counts
-- **Collection Reuse**: Direct collection passing without unnecessary copying
-- **Lazy Evaluation**: Rankings calculated only when needed
-
-#### Parallel Processing
-
-- **Multi-Server**: Different Discord servers processed simultaneously
-- **Multi-Channel**: Channels within servers processed in parallel
-- **Multi-Ranking**: Rankings generated concurrently
-
-#### Algorithmic Improvements
-
-- **String Processing**: Character-by-character word counting (3-5x faster than regex)
-- **Map Operations**: Efficient emoji counting using merge operations
-- **Stream Processing**: Optimized data aggregation pipelines
-
-## 📈 Performance Characteristics
-
-### Expected Speedup
-
-| Dataset Size    | Performance Improvement |
-|-----------------|-------------------------|
-| < 1K messages   | 2-3x faster             |
-| 1K-50K messages | 3-5x faster             |
-| > 50K messages  | 5-10x faster            |
-
-### Memory Usage
-
-- **50-80% reduction** in memory footprint compared to naive implementation
-- **Better garbage collection** patterns
-- **Predictable memory usage** scaling
-
 ## 🔧 Development
+
+**Application Flow:**
+
+```mermaid
+sequenceDiagram
+    participant Main
+    participant Analyzer
+    participant FileService
+    participant AuthorData
+    participant RankingFactory
+    participant Rankings
+    Main ->> Analyzer: analyzeFolders(LOG_FOLDER_PATHS)
+
+    loop For each folder
+        Analyzer ->> FileService: getJsonFiles(folderPath)
+        FileService -->> Analyzer: List<File> jsonFiles
+
+        loop For each channel (parallel)
+            Analyzer ->> FileService: parseChannel(jsonFile)
+            FileService -->> Analyzer: Channel data
+
+            loop For each message
+                Analyzer ->> AuthorData: updateStatistics(message)
+                AuthorData -->> Analyzer: statistics updated
+            end
+        end
+
+        Analyzer ->> RankingFactory: createRanking(type, authorData)
+        RankingFactory -->> Analyzer: Ranking instance
+
+        loop For each ranking type
+            Analyzer ->> Rankings: generateRanking(authorData)
+            Rankings -->> Analyzer: ranking results
+            Analyzer ->> FileService: writeRankingToFile(ranking, outputPath)
+            FileService -->> Analyzer: file written
+        end
+
+        Analyzer ->> FileService: writeAllDataToFile(authorData, outputPath)
+        FileService -->> Analyzer: complete data written
+    end
+
+    Analyzer -->> Main: analysis complete
+```
 
 ### Building from Source
 
