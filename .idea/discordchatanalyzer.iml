@@ -3,6 +3,8 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/java/src/main/resources/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/logs/dttd" />
+      <excludeFolder url="file://$MODULE_DIR$/logs/m10z" />
     </content>
   </component>
 </module>
