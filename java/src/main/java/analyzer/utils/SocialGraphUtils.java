@@ -51,9 +51,15 @@ public class SocialGraphUtils {
                     if (mentionsReceivedCount != null && mentionsReceivedCount > 0) {
                         // Mutual relationship found - avoid duplicates by only adding if userId < mentionedUserId
                         if (userId.compareTo(mentionedUserId) < 0) {
+                            // Get user names for display
+                            String user1Name = authorData.getAuthor().getName();
+                            String user2Name = mentionedUser.getAuthor().getName();
+                            
                             mutualRelationships.add(new MutualMentionRelationship(
                                     userId,
                                     mentionedUserId,
+                                    user1Name,
+                                    user2Name,
                                     mentionsSentCount,
                                     mentionsReceivedCount
                             ));
@@ -68,35 +74,42 @@ public class SocialGraphUtils {
                 .collect(Collectors.toList());
     }
 
-    /**
+        /**
      * Exports social graph data in a format suitable for network visualization tools
      */
     public static SocialGraphExport exportSocialGraphData(Collection<AuthorData> authorDataCollection) {
         List<Node> nodes = new ArrayList<>();
         List<Edge> edges = new ArrayList<>();
-
-        // Create nodes
+        
+        // Create mapping from ID to name for lookup
+        Map<String, String> idToNameMap = new HashMap<>();
+        for (AuthorData authorData : authorDataCollection) {
+            idToNameMap.put(authorData.getAuthorId(), authorData.getAuthor().getName());
+        }
+        
+        // Create nodes (using names as IDs for visualization)
         for (AuthorData authorData : authorDataCollection) {
             nodes.add(new Node(
-                    authorData.getAuthorId(),
-                    authorData.getAuthor().getName(),
+                    authorData.getAuthor().getName(),  // Use name as ID
+                    authorData.getAuthor().getName(),  // Label same as ID
                     authorData.getTotalMentionsSent(),
                     authorData.getTotalMentionsReceived()
             ));
         }
-
-        // Create edges
+        
+        // Create edges (converting IDs to names)
         for (AuthorData authorData : authorDataCollection) {
-            String sourceId = authorData.getAuthorId();
-
+            String sourceName = authorData.getAuthor().getName();
+            
             for (Map.Entry<String, Integer> mentionEntry : authorData.getMentionsSent().entrySet()) {
                 String targetId = mentionEntry.getKey();
+                String targetName = idToNameMap.getOrDefault(targetId, "Unknown User");
                 int weight = mentionEntry.getValue();
-
-                edges.add(new Edge(sourceId, targetId, weight));
+                
+                edges.add(new Edge(sourceName, targetName, weight));
             }
         }
-
+        
         return new SocialGraphExport(nodes, edges);
     }
 
@@ -161,13 +174,17 @@ public class SocialGraphUtils {
     public static class MutualMentionRelationship {
         private final String user1Id;
         private final String user2Id;
+        private final String user1Name;
+        private final String user2Name;
         private final int user1ToUser2Mentions;
         private final int user2ToUser1Mentions;
 
-        public MutualMentionRelationship(String user1Id, String user2Id,
+        public MutualMentionRelationship(String user1Id, String user2Id, String user1Name, String user2Name,
                                        int user1ToUser2Mentions, int user2ToUser1Mentions) {
             this.user1Id = user1Id;
             this.user2Id = user2Id;
+            this.user1Name = user1Name;
+            this.user2Name = user2Name;
             this.user1ToUser2Mentions = user1ToUser2Mentions;
             this.user2ToUser1Mentions = user2ToUser1Mentions;
         }
@@ -179,6 +196,8 @@ public class SocialGraphUtils {
         // Getters
         public String getUser1Id() { return user1Id; }
         public String getUser2Id() { return user2Id; }
+        public String getUser1Name() { return user1Name; }
+        public String getUser2Name() { return user2Name; }
         public int getUser1ToUser2Mentions() { return user1ToUser2Mentions; }
         public int getUser2ToUser1Mentions() { return user2ToUser1Mentions; }
     }

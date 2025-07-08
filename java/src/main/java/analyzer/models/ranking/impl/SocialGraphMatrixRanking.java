@@ -38,18 +38,28 @@ public class SocialGraphMatrixRanking extends Ranking {
     private void buildSocialGraphMatrix(Collection<AuthorData> authorDataCollection) {
         socialGraphMatrix = new HashMap<>();
         
-        // Initialize matrix with all users
-        for (String userId : allUserIds) {
-            socialGraphMatrix.put(userId, new HashMap<>());
+        // Create mapping from ID to name for lookup
+        Map<String, String> idToNameMap = new HashMap<>();
+        for (AuthorData authorData : authorDataCollection) {
+            idToNameMap.put(authorData.getAuthorId(), authorData.getAuthor().getName());
         }
         
-        // Populate matrix with mention data
+        // Initialize matrix with all users (using names as keys)
         for (AuthorData authorData : authorDataCollection) {
-            String authorId = authorData.getAuthorId();
-            Map<String, Integer> authorMentions = socialGraphMatrix.get(authorId);
+            String authorName = authorData.getAuthor().getName();
+            socialGraphMatrix.put(authorName, new HashMap<>());
+        }
+        
+        // Populate matrix with mention data (converting IDs to names)
+        for (AuthorData authorData : authorDataCollection) {
+            String authorName = authorData.getAuthor().getName();
+            Map<String, Integer> authorMentions = socialGraphMatrix.get(authorName);
             
-            // Add mentions sent by this user
-            authorData.getMentionsSent().forEach(authorMentions::put);
+            // Add mentions sent by this user, converting mentioned IDs to names
+            authorData.getMentionsSent().forEach((mentionedId, count) -> {
+                String mentionedName = idToNameMap.getOrDefault(mentionedId, "Unknown User");
+                authorMentions.put(mentionedName, count);
+            });
         }
     }
 
@@ -57,7 +67,7 @@ public class SocialGraphMatrixRanking extends Ranking {
         userGraphStats = new HashMap<>();
         
         for (AuthorData authorData : authorDataCollection) {
-            String userId = authorData.getAuthorId();
+            String userName = authorData.getAuthor().getName();
             UserGraphStats stats = new UserGraphStats();
             
             // Calculate outgoing connections (mentions sent)
@@ -71,7 +81,7 @@ public class SocialGraphMatrixRanking extends Ranking {
             // Calculate centrality score (simple metric: in + out connections)
             stats.centralityScore = stats.incomingConnections + stats.outgoingConnections;
             
-            userGraphStats.put(userId, stats);
+            userGraphStats.put(userName, stats);
         }
     }
 

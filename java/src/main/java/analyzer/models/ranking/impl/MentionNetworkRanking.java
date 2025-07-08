@@ -42,15 +42,24 @@ public class MentionNetworkRanking extends Ranking {
     private void buildMentionMatrix(Collection<AuthorData> authorDataCollection) {
         mentionMatrix = new HashMap<>();
         
+        // Create mapping from ID to name for lookup
+        Map<String, String> idToNameMap = new HashMap<>();
         for (AuthorData authorData : authorDataCollection) {
-            String authorId = authorData.getAuthorId();
+            idToNameMap.put(authorData.getAuthorId(), authorData.getAuthor().getName());
+        }
+        
+        for (AuthorData authorData : authorDataCollection) {
+            String authorName = authorData.getAuthor().getName();
             Map<String, Integer> mentionsFromThisUser = new HashMap<>();
             
-            // Add all mentions sent by this user
-            mentionsFromThisUser.putAll(authorData.getMentionsSent());
+            // Add all mentions sent by this user, converting IDs to names
+            authorData.getMentionsSent().forEach((mentionedId, count) -> {
+                String mentionedName = idToNameMap.getOrDefault(mentionedId, "Unknown User");
+                mentionsFromThisUser.put(mentionedName, count);
+            });
             
             if (!mentionsFromThisUser.isEmpty()) {
-                mentionMatrix.put(authorId, mentionsFromThisUser);
+                mentionMatrix.put(authorName, mentionsFromThisUser);
             }
         }
     }
@@ -59,8 +68,8 @@ public class MentionNetworkRanking extends Ranking {
         topMentionRelationships = mentionMatrix.entrySet().stream()
             .flatMap(entry -> entry.getValue().entrySet().stream()
                 .map(mentionEntry -> new MentionRelationship(
-                    entry.getKey(),
-                    mentionEntry.getKey(),
+                    entry.getKey(),   // Already a name now
+                    mentionEntry.getKey(),  // Already a name now
                     mentionEntry.getValue())))
             .sorted((r1, r2) -> Integer.compare(r2.getCount(), r1.getCount()))
             .limit(20) // Top 20 relationships
@@ -82,19 +91,19 @@ public class MentionNetworkRanking extends Ranking {
 
     @Getter
     public static class MentionRelationship {
-        private final String mentionerId;
-        private final String mentionedId;
+        private final String mentionerName;
+        private final String mentionedName;
         private final int count;
 
-        public MentionRelationship(String mentionerId, String mentionedId, int count) {
-            this.mentionerId = mentionerId;
-            this.mentionedId = mentionedId;
+        public MentionRelationship(String mentionerName, String mentionedName, int count) {
+            this.mentionerName = mentionerName;
+            this.mentionedName = mentionedName;
             this.count = count;
         }
 
         @Override
         public String toString() {
-            return mentionerId + " -> " + mentionedId + " (" + count + " mentions)";
+            return mentionerName + " -> " + mentionedName + " (" + count + " mentions)";
         }
     }
 } 

@@ -83,9 +83,28 @@ Charlie         ──→ Dave (19)
 
 **Contains:**
 - `mostMentionsSent`: Users ranked by mentions sent
-- `topMentionRelationships`: Top 20 mention relationships
-- `mentionMatrix`: Complete user-to-user mention matrix
+- `topMentionRelationships`: Top 20 mention relationships (uses user names)
+- `mentionMatrix`: Complete user-to-user mention matrix (uses user names for readability)
 - `totalMentionConnections`: Total network connections
+
+**Sample JSON Structure:**
+```json
+{
+  "topMentionRelationships": [
+    {
+      "mentionerName": "Alice",
+      "mentionedName": "Bob",
+      "count": 25
+    }
+  ],
+  "mentionMatrix": {
+    "Alice": {
+      "Bob": 25,
+      "Charlie": 8
+    }
+  }
+}
+```
 
 ### 4. `ranking-most-mentions-sent.json`
 **Users ranked by how many mentions they send**
@@ -98,11 +117,37 @@ Charlie         ──→ Dave (19)
 **Complete social relationship matrix**
 
 **Contains:**
-- `socialGraphMatrix`: Full user-to-user mention matrix
+- `socialGraphMatrix`: Full user-to-user mention matrix (uses user names for readability)
 - `userGraphStats`: Per-user network statistics including:
   - Incoming/outgoing connections
   - Total mentions sent/received
   - Centrality scores (social influence measure)
+
+**Sample JSON Structure:**
+```json
+{
+  "socialGraphMatrix": {
+    "Alice": {
+      "Bob": 25,
+      "Charlie": 8,
+      "Dave": 5
+    },
+    "Bob": {
+      "Alice": 18,
+      "Charlie": 12
+    }
+  },
+  "userGraphStats": {
+    "Alice": {
+      "incomingConnections": 3,
+      "outgoingConnections": 4,
+      "totalMentionsSent": 45,
+      "totalMentionsReceived": 28,
+      "centralityScore": 7
+    }
+  }
+}
+```
 
 ## 🎯 What You Can Learn
 

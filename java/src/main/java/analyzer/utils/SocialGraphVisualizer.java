@@ -46,8 +46,11 @@ public class SocialGraphVisualizer {
         sb.append("\n=== TOP MUTUAL RELATIONSHIPS ===\n");
         for (int i = 0; i < Math.min(10, mutualRelationships.size()); i++) {
             MutualMentionRelationship rel = mutualRelationships.get(i);
-            sb.append(String.format("%2d. User1→User2: %d, User2→User1: %d (Total: %d)\n", 
-                i + 1, rel.getUser1ToUser2Mentions(), rel.getUser2ToUser1Mentions(), rel.getTotalMentions()));
+            sb.append(String.format("%2d. %s→%s: %d, %s→%s: %d (Total: %d)\n", 
+                i + 1, 
+                rel.getUser1Name(), rel.getUser2Name(), rel.getUser1ToUser2Mentions(),
+                rel.getUser2Name(), rel.getUser1Name(), rel.getUser2ToUser1Mentions(),
+                rel.getTotalMentions()));
         }
 
         // Simple network diagram
