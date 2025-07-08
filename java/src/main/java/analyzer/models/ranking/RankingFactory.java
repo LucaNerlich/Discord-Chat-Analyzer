@@ -16,7 +16,10 @@ public class RankingFactory {
             RankingType.AVG_WORD_COUNT, AvgWordCountRanking::new,
             RankingType.MOST_EMBEDS, MostEmbedsRanking::new,
             RankingType.MOST_ATTACHMENTS, MostAttachmentsRanking::new,
-            RankingType.TIMES_MENTIONED, TimesMentionedRanking::new
+            RankingType.TIMES_MENTIONED, TimesMentionedRanking::new,
+            RankingType.MENTION_NETWORK, MentionNetworkRanking::new,
+            RankingType.MOST_MENTIONS_SENT, MostMentionsSentRanking::new,
+            RankingType.SOCIAL_GRAPH_MATRIX, SocialGraphMatrixRanking::new
     );
 
     public static Ranking createRanking(RankingType rankingType, Collection<AuthorData> authorDataCollection) {

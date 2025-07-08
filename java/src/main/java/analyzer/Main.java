@@ -33,6 +33,9 @@ public class Main {
             // Write Rankings in parallel
             writeRankings(analyzer, fileService, outputDir);
 
+            // Write Social Graph Visualizations
+            writeSocialGraphVisualizations(analyzer, fileService, outputDir);
+
             ExceptionHandler.logInfo("Completed analysis for folder: " + folderPath);
         });
 
@@ -52,6 +55,21 @@ public class Main {
             ExceptionHandler.handleException(e, "writing rankings");
         } finally {
             executorService.shutdown();
+        }
+    }
+
+    private static void writeSocialGraphVisualizations(Analyzer analyzer, FileService fileService, String outputDir) {
+        try {
+            // Generate and write text visualization
+            String textVisualization = analyzer.generateTextVisualization();
+            fileService.writeSocialGraphTextVisualization(textVisualization, outputDir);
+
+            // Generate and write HTML visualization
+            String htmlContent = analyzer.generateHTMLContent();
+            fileService.writeSocialGraphHTMLVisualization(htmlContent, outputDir);
+
+        } catch (Exception e) {
+            ExceptionHandler.handleException(e, "writing social graph visualizations");
         }
     }
 

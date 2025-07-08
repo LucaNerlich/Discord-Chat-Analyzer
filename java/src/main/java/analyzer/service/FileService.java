@@ -93,6 +93,46 @@ public class FileService {
         }
     }
 
+    /**
+     * Writes social graph text visualization to file in the specified output directory
+     */
+    public void writeSocialGraphTextVisualization(String textVisualization, String outputDir) {
+        if (textVisualization == null || textVisualization.trim().isEmpty()) {
+            ExceptionHandler.logWarning("Attempted to write null or empty text visualization");
+            return;
+        }
+
+        String outputPath = createOutputPath(outputDir, AnalyzerConfig.SOCIAL_GRAPH_TEXT_VISUALIZATION);
+        createOutputDirectoryIfNotExists(outputDir);
+
+        try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
+            writer.write(textVisualization);
+            ExceptionHandler.logInfo("Social graph text visualization written to: " + outputPath);
+        } catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "writing social graph text visualization");
+        }
+    }
+
+    /**
+     * Writes social graph HTML visualization to file in the specified output directory
+     */
+    public void writeSocialGraphHTMLVisualization(String htmlContent, String outputDir) {
+        if (htmlContent == null || htmlContent.trim().isEmpty()) {
+            ExceptionHandler.logWarning("Attempted to write null or empty HTML content");
+            return;
+        }
+
+        String outputPath = createOutputPath(outputDir, AnalyzerConfig.SOCIAL_GRAPH_HTML_VISUALIZATION);
+        createOutputDirectoryIfNotExists(outputDir);
+
+        try (Writer writer = Files.newBufferedWriter(Paths.get(outputPath))) {
+            writer.write(htmlContent);
+            ExceptionHandler.logInfo("Social graph HTML visualization written to: " + outputPath);
+        } catch (IOException e) {
+            ExceptionHandler.handleIOException(e, "writing social graph HTML visualization");
+        }
+    }
+
     private Channel parseChannelFromFile(String logFilePath) {
         try (Reader reader = Files.newBufferedReader(Paths.get(logFilePath))) {
             return gson.fromJson(reader, Channel.class);

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Holds the analyzed data for a single Author.
@@ -30,6 +31,10 @@ public class AuthorData {
     private long sumEmojisReceived = 0;
     private long timesMentioned = 0;
     private Map<Emoji, Integer> emojisReceived = new TreeMap<>(new Emoji.EmojiComparator());
+
+    // Social graph data - who this user mentions and who mentions them
+    private Map<String, Integer> mentionsSent = new ConcurrentHashMap<>();
+    private Map<String, Integer> mentionsReceived = new ConcurrentHashMap<>();
 
     public void addWordCount(int wordCount) {
         totalWordCount += wordCount;
@@ -55,6 +60,22 @@ public class AuthorData {
         embedsSent++;
     }
 
+    public void addMentionSent(String mentionedUserId) {
+        mentionsSent.merge(mentionedUserId, 1, Integer::sum);
+    }
+
+    public void addMentionReceived(String mentionerUserId) {
+        mentionsReceived.merge(mentionerUserId, 1, Integer::sum);
+    }
+
+    public long getTotalMentionsSent() {
+        return mentionsSent.values().stream().mapToLong(Integer::longValue).sum();
+    }
+
+    public long getTotalMentionsReceived() {
+        return mentionsReceived.values().stream().mapToLong(Integer::longValue).sum();
+    }
+
     public void setEarliestLocalDate(String timestamp) {
         //  "timestamp": "2018-10-18T08:52:29.781+00:00",
         final String yearMonthDay = timestamp.substring(0, 10);
@@ -72,10 +93,10 @@ public class AuthorData {
 
     public String getLocalDateAsString(LocalDate localDate) {
         return localDate.getDayOfMonth() +
-                "." +
-                localDate.getMonthValue() +
-                "." +
-                localDate.getYear();
+            "." +
+            localDate.getMonthValue() +
+            "." +
+            localDate.getYear();
     }
 
     private void setFirstMessageSent() {
@@ -146,6 +167,21 @@ public class AuthorData {
         @Override
         public int compare(AuthorData o1, AuthorData o2) {
             final int compare = o1.getEarliestLocalDate().compareTo(o2.getEarliestLocalDate());
+            if (compare == 0) {
+                return 1;
+            } else {
+                return compare;
+            }
+        }
+    }
+
+    public static class AuthorDataMentionsSentComparator implements Comparator<AuthorData> {
+        @Override
+        public int compare(AuthorData o1, AuthorData o2) {
+            final Long mentionsSent1 = o1.getTotalMentionsSent();
+            final Long mentionsSent2 = o2.getTotalMentionsSent();
+            final int compare = mentionsSent2.compareTo(mentionsSent1);
+
             if (compare == 0) {
                 return 1;
             } else {

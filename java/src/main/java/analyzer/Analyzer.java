@@ -13,6 +13,8 @@ import analyzer.models.ranking.Ranking;
 import analyzer.models.ranking.RankingFactory;
 import analyzer.models.ranking.RankingType;
 import analyzer.stats.AuthorData;
+import analyzer.utils.SocialGraphUtils;
+import analyzer.utils.SocialGraphVisualizer;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -66,6 +68,69 @@ public class Analyzer {
     public Ranking getRanking(RankingType rankingType) {
         // Pass the collection directly instead of creating a new LinkedList
         return RankingFactory.createRanking(rankingType, authorDataMap.values());
+    }
+
+    /**
+     * Get social graph utilities for analyzing mention relationships
+     */
+    public SocialGraphUtils.NetworkStatistics getNetworkStatistics() {
+        return SocialGraphUtils.calculateNetworkStatistics(authorDataMap.values());
+    }
+
+    /**
+     * Get the most connected users in the social graph
+     */
+    public List<SocialGraphUtils.UserConnection> getMostConnectedUsers() {
+        return SocialGraphUtils.getMostConnectedUsers(authorDataMap.values());
+    }
+
+    /**
+     * Find mutual mention relationships (users who mention each other)
+     */
+    public List<SocialGraphUtils.MutualMentionRelationship> getMutualMentionRelationships() {
+        return SocialGraphUtils.findMutualMentionRelationships(authorDataMap.values());
+    }
+
+    /**
+     * Export social graph data for visualization tools
+     */
+    public SocialGraphUtils.SocialGraphExport exportSocialGraphData() {
+        return SocialGraphUtils.exportSocialGraphData(authorDataMap.values());
+    }
+
+    /**
+     * Generate a text-based visualization of the social graph
+     */
+    public String generateTextVisualization() {
+        return SocialGraphVisualizer.generateTextVisualization(authorDataMap.values());
+    }
+
+    /**
+     * Generate HTML content for visualization (as string)
+     */
+    public String generateHTMLContent() {
+        return SocialGraphVisualizer.generateHTMLContent(authorDataMap.values());
+    }
+
+    /**
+     * Generate an interactive HTML visualization
+     */
+    public void generateHTMLVisualization(String outputPath) throws java.io.IOException {
+        SocialGraphVisualizer.generateHTMLVisualization(authorDataMap.values(), outputPath);
+    }
+
+    /**
+     * Export social graph in Gephi format
+     */
+    public void exportGephiFormat(String outputPath) throws java.io.IOException {
+        SocialGraphVisualizer.exportGephiFormat(authorDataMap.values(), outputPath);
+    }
+
+    /**
+     * Export social graph in GraphML format
+     */
+    public void exportGraphMLFormat(String outputPath) throws java.io.IOException {
+        SocialGraphVisualizer.exportGraphMLFormat(authorDataMap.values(), outputPath);
     }
 
     private void removeAuthors() {
@@ -127,6 +192,20 @@ public class Analyzer {
         final Mention[] mentions = message.getMentions();
         if (mentions != null && mentions.length > 0) {
             authorData.incrementTimesMentioned();
+            
+            // Track mention relationships for social graph
+            final String mentionerId = message.getAuthor().getId();
+            
+            for (Mention mention : mentions) {
+                final String mentionedId = mention.getId();
+                
+                // Record that this author mentioned someone
+                authorData.addMentionSent(mentionedId);
+                
+                // Record that the mentioned person was mentioned by this author
+                AuthorData mentionedAuthorData = findOrCreateAuthorData(mentionedId);
+                mentionedAuthorData.addMentionReceived(mentionerId);
+            }
         }
     }
 
@@ -165,5 +244,28 @@ public class Analyzer {
             // More efficient than contains + get + put
             emojisReceived.merge(emoji, count, Integer::sum);
         }
+    }
+
+    private AuthorData findOrCreateAuthorData(String userId) {
+        // Find existing author data by user ID
+        for (Map.Entry<Author, AuthorData> entry : authorDataMap.entrySet()) {
+            if (entry.getKey().getId().equals(userId)) {
+                return entry.getValue();
+            }
+        }
+        
+        // If not found, create a new AuthorData with minimal author info
+        // This handles cases where mentioned users don't have messages in the analyzed channels
+        Author placeholderAuthor = new Author();
+        placeholderAuthor.setId(userId);
+        placeholderAuthor.setName("Unknown User " + userId);
+        placeholderAuthor.setNickname("Unknown User " + userId);
+        
+        AuthorData newAuthorData = new AuthorData();
+        newAuthorData.setAuthorId(userId);
+        newAuthorData.setAuthor(placeholderAuthor);
+        
+        authorDataMap.put(placeholderAuthor, newAuthorData);
+        return newAuthorData;
     }
 }
