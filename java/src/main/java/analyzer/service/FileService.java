@@ -28,10 +28,10 @@ public class FileService {
 
     public FileService() {
         this.gson = new GsonBuilder()
-                .setDateFormat(DateFormat.FULL, DateFormat.FULL)
-                .setPrettyPrinting()
-                .serializeNulls() // Performance: avoid null checks during serialization
-                .create();
+            .setDateFormat(DateFormat.FULL, DateFormat.FULL)
+            .setPrettyPrinting()
+            .serializeNulls() // Performance: avoid null checks during serialization
+            .create();
     }
 
     /**
@@ -147,10 +147,10 @@ public class FileService {
 
         try (Stream<Path> walk = Files.walk(Paths.get(folderPath))) {
             List<String> result = walk
-                    .filter(path -> path.toString().endsWith(".json"))
-                    .filter(path -> !containsOutputFolder(path))  // Exclude output directory files
-                    .map(Path::toString)
-                    .collect(Collectors.toList()); // Java 11 compatible
+                .filter(path -> path.toString().endsWith(".json"))
+                .filter(path -> !containsOutputFolder(path))  // Exclude output directory files
+                .map(Path::toString)
+                .toList();
             logPaths.addAll(result);
         } catch (IOException e) {
             ExceptionHandler.handleIOException(e, "reading log paths from: " + folderPath);
@@ -175,8 +175,6 @@ public class FileService {
      * Creates output directory path based on input folder name
      */
     public String createOutputDirectory(String inputFolderPath) {
-        // Extract folder name from path (e.g., "logs/m10z" -> "m10z")
-        String folderName = Paths.get(inputFolderPath).getFileName().toString();
         return inputFolderPath + "/" + AnalyzerConfig.OUTPUT_SUBFOLDER;
     }
 

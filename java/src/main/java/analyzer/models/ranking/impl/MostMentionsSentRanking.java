@@ -22,19 +22,19 @@ public class MostMentionsSentRanking extends Ranking {
 
     private void calculateMentionsSentRanking(Collection<AuthorData> authorDataCollection) {
         mostMentionsSent = new TreeMap<>(new AuthorData.AuthorDataMentionsSentComparator());
-        authorDataCollection.forEach(authorData -> 
+        authorDataCollection.forEach(authorData ->
             mostMentionsSent.put(authorData, authorData.getTotalMentionsSent())
         );
     }
 
     private void countTotalMentionsSent(Collection<AuthorData> authorDataCollection) {
         totalMentionsSent = authorDataCollection.stream()
-                .mapToLong(AuthorData::getTotalMentionsSent)
-                .sum();
+            .mapToLong(AuthorData::getTotalMentionsSent)
+            .sum();
     }
 
     @Override
     public String getOutputFileName() {
         return AnalyzerConfig.RANKING_MOST_MENTIONS_SENT;
     }
-} 
+}

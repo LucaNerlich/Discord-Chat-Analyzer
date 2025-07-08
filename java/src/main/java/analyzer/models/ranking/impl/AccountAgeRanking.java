@@ -22,8 +22,8 @@ public class AccountAgeRanking extends Ranking {
     private void calculateAccountAgeRanking(Collection<AuthorData> authorDataCollection) {
         joinedServer = new TreeMap<>(new AuthorData.AuthorDataFirstMessageComparator());
         authorDataCollection.stream()
-                .filter(authorData -> authorData.getMessagesSent() >= AnalyzerConfig.MIN_AMOUNT_MESSAGES)
-                .forEach(authorData -> joinedServer.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
+            .filter(authorData -> authorData.getMessagesSent() >= AnalyzerConfig.MIN_AMOUNT_MESSAGES)
+            .forEach(authorData -> joinedServer.put(authorData, authorData.getLocalDateAsString(authorData.getEarliestLocalDate())));
     }
 
     @Override

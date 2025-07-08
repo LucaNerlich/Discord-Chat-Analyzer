@@ -28,8 +28,8 @@ public class MostAttachmentsRanking extends Ranking {
 
     private void countAttachments(Collection<AuthorData> authorDataCollection) {
         attachmentsSent = authorDataCollection.stream()
-                .mapToLong(AuthorData::getAttachmentsSent)
-                .sum();
+            .mapToLong(AuthorData::getAttachmentsSent)
+            .sum();
     }
 
     @Override

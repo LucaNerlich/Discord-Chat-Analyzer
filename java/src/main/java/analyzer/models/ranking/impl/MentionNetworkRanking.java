@@ -34,30 +34,30 @@ public class MentionNetworkRanking extends Ranking {
 
     private void calculateMentionsSentRanking(Collection<AuthorData> authorDataCollection) {
         mostMentionsSent = new TreeMap<>(new AuthorData.AuthorDataMentionsSentComparator());
-        authorDataCollection.forEach(authorData -> 
+        authorDataCollection.forEach(authorData ->
             mostMentionsSent.put(authorData, authorData.getTotalMentionsSent())
         );
     }
 
     private void buildMentionMatrix(Collection<AuthorData> authorDataCollection) {
         mentionMatrix = new HashMap<>();
-        
+
         // Create mapping from ID to name for lookup
         Map<String, String> idToNameMap = new HashMap<>();
         for (AuthorData authorData : authorDataCollection) {
             idToNameMap.put(authorData.getAuthorId(), authorData.getAuthor().getName());
         }
-        
+
         for (AuthorData authorData : authorDataCollection) {
             String authorName = authorData.getAuthor().getName();
             Map<String, Integer> mentionsFromThisUser = new HashMap<>();
-            
+
             // Add all mentions sent by this user, converting IDs to names
             authorData.getMentionsSent().forEach((mentionedId, count) -> {
                 String mentionedName = idToNameMap.getOrDefault(mentionedId, "Unknown User");
                 mentionsFromThisUser.put(mentionedName, count);
             });
-            
+
             if (!mentionsFromThisUser.isEmpty()) {
                 mentionMatrix.put(authorName, mentionsFromThisUser);
             }
@@ -106,4 +106,4 @@ public class MentionNetworkRanking extends Ranking {
             return mentionerName + " -> " + mentionedName + " (" + count + " mentions)";
         }
     }
-} 
+}

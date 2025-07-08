@@ -37,24 +37,24 @@ public class SocialGraphMatrixRanking extends Ranking {
 
     private void buildSocialGraphMatrix(Collection<AuthorData> authorDataCollection) {
         socialGraphMatrix = new HashMap<>();
-        
+
         // Create mapping from ID to name for lookup
         Map<String, String> idToNameMap = new HashMap<>();
         for (AuthorData authorData : authorDataCollection) {
             idToNameMap.put(authorData.getAuthorId(), authorData.getAuthor().getName());
         }
-        
+
         // Initialize matrix with all users (using names as keys)
         for (AuthorData authorData : authorDataCollection) {
             String authorName = authorData.getAuthor().getName();
             socialGraphMatrix.put(authorName, new HashMap<>());
         }
-        
+
         // Populate matrix with mention data (converting IDs to names)
         for (AuthorData authorData : authorDataCollection) {
             String authorName = authorData.getAuthor().getName();
             Map<String, Integer> authorMentions = socialGraphMatrix.get(authorName);
-            
+
             // Add mentions sent by this user, converting mentioned IDs to names
             authorData.getMentionsSent().forEach((mentionedId, count) -> {
                 String mentionedName = idToNameMap.getOrDefault(mentionedId, "Unknown User");
@@ -65,22 +65,22 @@ public class SocialGraphMatrixRanking extends Ranking {
 
     private void calculateUserGraphStats(Collection<AuthorData> authorDataCollection) {
         userGraphStats = new HashMap<>();
-        
+
         for (AuthorData authorData : authorDataCollection) {
             String userName = authorData.getAuthor().getName();
             UserGraphStats stats = new UserGraphStats();
-            
+
             // Calculate outgoing connections (mentions sent)
             stats.outgoingConnections = authorData.getMentionsSent().size();
             stats.totalMentionsSent = authorData.getTotalMentionsSent();
-            
+
             // Calculate incoming connections (mentions received)
             stats.incomingConnections = authorData.getMentionsReceived().size();
             stats.totalMentionsReceived = authorData.getTotalMentionsReceived();
-            
+
             // Calculate centrality score (simple metric: in + out connections)
             stats.centralityScore = stats.incomingConnections + stats.outgoingConnections;
-            
+
             userGraphStats.put(userName, stats);
         }
     }
@@ -105,7 +105,7 @@ public class SocialGraphMatrixRanking extends Ranking {
         @Override
         public String toString() {
             return String.format("In: %d, Out: %d, SentMentions: %d, ReceivedMentions: %d, Centrality: %d",
-                    incomingConnections, outgoingConnections, totalMentionsSent, totalMentionsReceived, centralityScore);
+                incomingConnections, outgoingConnections, totalMentionsSent, totalMentionsReceived, centralityScore);
         }
     }
-} 
+}

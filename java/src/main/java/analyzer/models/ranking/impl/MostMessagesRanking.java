@@ -29,8 +29,8 @@ public class MostMessagesRanking extends Ranking {
 
     private void countMessages(Collection<AuthorData> authorDataCollection) {
         messagesSent = authorDataCollection.stream()
-                .mapToLong(AuthorData::getMessagesSent)
-                .sum();
+            .mapToLong(AuthorData::getMessagesSent)
+            .sum();
     }
 
     @Override

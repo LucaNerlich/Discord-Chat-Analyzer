@@ -29,18 +29,12 @@ public final class AnalyzerConfig {
 
     // Data Source Folders
     public static final List<String> LOG_FOLDER_PATHS = List.of(
-            "logs/m10z",
-            "logs/dttd"
+        "logs/m10z",
+        "logs/dttd"
     );
 
     // Threading Configuration
     public static final int THREAD_POOL_SIZE = Runtime.getRuntime().availableProcessors();
-
-    // Performance Configuration
-    public static final int JSON_PARSE_BATCH_SIZE = 100; // Process JSON files in batches
-    public static final boolean ENABLE_PARALLEL_FOLDER_PROCESSING = true;
-    public static final boolean ENABLE_PARALLEL_CHANNEL_PROCESSING = true;
-    public static final int CHANNEL_PROCESSING_BATCH_SIZE = 50;
 
     private AnalyzerConfig() {
         // Utility class - prevent instantiation

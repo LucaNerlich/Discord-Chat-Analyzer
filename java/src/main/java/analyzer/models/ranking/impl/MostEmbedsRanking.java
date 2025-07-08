@@ -28,8 +28,8 @@ public class MostEmbedsRanking extends Ranking {
 
     private void countEmbeds(Collection<AuthorData> authorDataCollection) {
         embedsSent = authorDataCollection.stream()
-                .mapToLong(AuthorData::getEmbedsSent)
-                .sum();
+            .mapToLong(AuthorData::getEmbedsSent)
+            .sum();
     }
 
     @Override

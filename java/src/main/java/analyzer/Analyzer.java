@@ -135,7 +135,7 @@ public class Analyzer {
 
     private void removeAuthors() {
         authorDataMap.values().removeIf(
-                authorData -> authorData.getMessagesSent() < AnalyzerConfig.MIN_AMOUNT_MESSAGES
+            authorData -> authorData.getMessagesSent() < AnalyzerConfig.MIN_AMOUNT_MESSAGES
         );
     }
 
@@ -150,11 +150,11 @@ public class Analyzer {
     private void countEmojis(Map.Entry<Author, AuthorData> entry) {
         final AuthorData authorData = entry.getValue();
         authorData.setSumEmojisReceived(
-                authorData.getEmojisReceived()
-                        .values()
-                        .stream()
-                        .mapToLong(value -> value)
-                        .sum()
+            authorData.getEmojisReceived()
+                .values()
+                .stream()
+                .mapToLong(value -> value)
+                .sum()
         );
     }
 
@@ -192,16 +192,16 @@ public class Analyzer {
         final Mention[] mentions = message.getMentions();
         if (mentions != null && mentions.length > 0) {
             authorData.incrementTimesMentioned();
-            
+
             // Track mention relationships for social graph
             final String mentionerId = message.getAuthor().getId();
-            
+
             for (Mention mention : mentions) {
                 final String mentionedId = mention.getId();
-                
+
                 // Record that this author mentioned someone
                 authorData.addMentionSent(mentionedId);
-                
+
                 // Record that the mentioned person was mentioned by this author
                 AuthorData mentionedAuthorData = findOrCreateAuthorData(mentionedId);
                 mentionedAuthorData.addMentionReceived(mentionerId);
@@ -253,18 +253,18 @@ public class Analyzer {
                 return entry.getValue();
             }
         }
-        
+
         // If not found, create a new AuthorData with minimal author info
         // This handles cases where mentioned users don't have messages in the analyzed channels
         Author placeholderAuthor = new Author();
         placeholderAuthor.setId(userId);
         placeholderAuthor.setName("Unknown User " + userId);
         placeholderAuthor.setNickname("Unknown User " + userId);
-        
+
         AuthorData newAuthorData = new AuthorData();
         newAuthorData.setAuthorId(userId);
         newAuthorData.setAuthor(placeholderAuthor);
-        
+
         authorDataMap.put(placeholderAuthor, newAuthorData);
         return newAuthorData;
     }

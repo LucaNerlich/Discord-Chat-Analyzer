@@ -28,8 +28,8 @@ public class MostCommonReactionRanking extends Ranking {
 
     private void countReactions() {
         reactionsGiven = mostCommonReaction.values().stream()
-                .mapToLong(Integer::intValue)
-                .sum();
+            .mapToLong(Integer::intValue)
+            .sum();
     }
 
     private void calculateMostCommonReaction(Collection<AuthorData> authorDataCollection) {

@@ -1,6 +1,15 @@
 package analyzer.models.ranking;
 
-import analyzer.models.ranking.impl.*;
+import analyzer.models.ranking.impl.AccountAgeRanking;
+import analyzer.models.ranking.impl.AvgWordCountRanking;
+import analyzer.models.ranking.impl.MentionNetworkRanking;
+import analyzer.models.ranking.impl.MostAttachmentsRanking;
+import analyzer.models.ranking.impl.MostCommonReactionRanking;
+import analyzer.models.ranking.impl.MostEmbedsRanking;
+import analyzer.models.ranking.impl.MostMentionsSentRanking;
+import analyzer.models.ranking.impl.MostMessagesRanking;
+import analyzer.models.ranking.impl.SocialGraphMatrixRanking;
+import analyzer.models.ranking.impl.TimesMentionedRanking;
 import analyzer.stats.AuthorData;
 
 import java.util.Collection;
@@ -10,16 +19,16 @@ import java.util.function.Function;
 public class RankingFactory {
 
     private static final Map<RankingType, Function<Collection<AuthorData>, Ranking>> RANKING_CREATORS = Map.of(
-            RankingType.MOST_MESSAGES, MostMessagesRanking::new,
-            RankingType.ACCOUNT_AGE, AccountAgeRanking::new,
-            RankingType.MOST_COMMON_REACTION, MostCommonReactionRanking::new,
-            RankingType.AVG_WORD_COUNT, AvgWordCountRanking::new,
-            RankingType.MOST_EMBEDS, MostEmbedsRanking::new,
-            RankingType.MOST_ATTACHMENTS, MostAttachmentsRanking::new,
-            RankingType.TIMES_MENTIONED, TimesMentionedRanking::new,
-            RankingType.MENTION_NETWORK, MentionNetworkRanking::new,
-            RankingType.MOST_MENTIONS_SENT, MostMentionsSentRanking::new,
-            RankingType.SOCIAL_GRAPH_MATRIX, SocialGraphMatrixRanking::new
+        RankingType.MOST_MESSAGES, MostMessagesRanking::new,
+        RankingType.ACCOUNT_AGE, AccountAgeRanking::new,
+        RankingType.MOST_COMMON_REACTION, MostCommonReactionRanking::new,
+        RankingType.AVG_WORD_COUNT, AvgWordCountRanking::new,
+        RankingType.MOST_EMBEDS, MostEmbedsRanking::new,
+        RankingType.MOST_ATTACHMENTS, MostAttachmentsRanking::new,
+        RankingType.TIMES_MENTIONED, TimesMentionedRanking::new,
+        RankingType.MENTION_NETWORK, MentionNetworkRanking::new,
+        RankingType.MOST_MENTIONS_SENT, MostMentionsSentRanking::new,
+        RankingType.SOCIAL_GRAPH_MATRIX, SocialGraphMatrixRanking::new
     );
 
     public static Ranking createRanking(RankingType rankingType, Collection<AuthorData> authorDataCollection) {

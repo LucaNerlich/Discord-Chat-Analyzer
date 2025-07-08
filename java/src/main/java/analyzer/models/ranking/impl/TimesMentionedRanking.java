@@ -29,8 +29,8 @@ public class TimesMentionedRanking extends Ranking {
 
     private void countMentions(Collection<AuthorData> authorDataCollection) {
         countMentions = authorDataCollection.stream()
-                .mapToLong(AuthorData::getTimesMentioned)
-                .sum();
+            .mapToLong(AuthorData::getTimesMentioned)
+            .sum();
     }
 
     @Override

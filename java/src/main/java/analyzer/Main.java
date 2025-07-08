@@ -46,11 +46,11 @@ public class Main {
         ExecutorService executorService = Executors.newFixedThreadPool(AnalyzerConfig.THREAD_POOL_SIZE);
         try {
             Arrays.stream(RankingType.values())
-                    .forEach(rankingType ->
-                            executorService.execute(() -> {
-                                final Ranking ranking = analyzer.getRanking(rankingType);
-                                fileService.writeRanking(ranking, outputDir);
-                            }));
+                .forEach(rankingType ->
+                    executorService.execute(() -> {
+                        final Ranking ranking = analyzer.getRanking(rankingType);
+                        fileService.writeRanking(ranking, outputDir);
+                    }));
         } catch (Exception e) {
             ExceptionHandler.handleException(e, "writing rankings");
         } finally {
